@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="transparent">#00FFFFFF</color>
+
+    <color name="background1">#FFFFFF</color>
+    <color name="background2">#FF6A00</color>
+    <color name="background3">#EAEAEA</color>
+
+    <color name="viewback1">#FFFFFF</color>
+    <color name="viewback2">#C0C0C0</color>
+    <color name="viewback3">#FF6A00</color>
+    <color name="viewback4">#F0F0F0</color>
+    <color name="viewback5">#66D0FF</color>
+
+    <!--字体颜色-->
+    <color name="stringcolor_black">#000</color>
+    <color name="stringcolor_grey">#9E9E9E</color>
+    <color name="stringcolor_blue">#FF6A00</color>
+    <color name="stringcolor_white">#FFF</color>
+
+    <!--垃圾分类-->
+    <color name="recycle">#4895F8</color>
+    <color name="kitchen">#7DA845</color>
+    <color name="other">#F6BF34</color>
+    <color name="harm">#FF5756</color>
+</resources>

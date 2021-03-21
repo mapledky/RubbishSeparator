@@ -1,0 +1,997 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.maple.smartcan.view.PercentLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.MainActivity">
+
+    <com.maple.smartcan.view.PercentLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/toppane"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/mainac_toppane_multi"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:scaleType="fitStart"
+            android:src="@drawable/morechoice"
+            app:layout_heightPercent="95.8333%"
+            app:layout_widthPercent="10%" />
+
+        <com.maple.smartcan.view.PercentLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_widthPercent="80%">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                app:layout_widthPercent="50%">
+
+                <TextView
+                    android:id="@+id/mainac_toppane_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@color/stringcolor_grey"
+                    android:textSize="25sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="end"
+                android:orientation="horizontal"
+                app:layout_widthPercent="50%">
+
+                <TextView
+                    android:id="@+id/mainac_toppane_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:ellipsize="end"
+                    android:gravity="end"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@color/stringcolor_grey"
+                    android:textSize="25dp"
+                    app:layout_widthPercent="100%" />
+            </LinearLayout>
+        </com.maple.smartcan.view.PercentLinearLayout>
+
+        <ImageView
+            android:id="@+id/mainac_toppane_garbage"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitCenter"
+            android:src="@drawable/garbage"
+            app:layout_heightPercent="80%" />
+    </com.maple.smartcan.view.PercentLinearLayout>
+
+
+    <com.maple.smartcan.view.PercentLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:background="@color/background3"
+        android:orientation="vertical">
+
+        <com.maple.smartcan.view.PercentLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/background1"
+            android:orientation="horizontal"
+            app:layout_heightPercent="10%">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:ellipsize="end"
+                android:paddingLeft="20dp"
+                android:singleLine="true"
+                android:text="@string/mainac_hello"
+                android:textColor="@color/stringcolor_black"
+                android:textSize="25sp"
+                app:layout_widthPercent="50%" />
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="end"
+                android:text="@string/help"
+                android:textColor="@color/stringcolor_grey"
+                android:textSize="20sp"
+                app:layout_widthPercent="40%" />
+
+            <ImageView
+                android:id="@+id/mainac_toppane_question"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/questionic" />
+
+        </com.maple.smartcan.view.PercentLinearLayout>
+
+        <com.maple.smartcan.view.PercentLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_heightPercent="80%">
+
+            <androidx.percentlayout.widget.PercentFrameLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_heightPercent="100%"
+                app:layout_widthPercent="70%">
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    app:layout_heightPercent="90%"
+                    app:layout_widthPercent="90%">
+
+
+                    <com.maple.smartcan.view.PercentLinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="@color/background1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginLeft="10dp"
+                            android:gravity="center_vertical"
+                            android:text="@string/garbage_data"
+                            android:textColor="@color/stringcolor_black"
+                            android:textSize="20sp"
+                            app:layout_heightPercent="10%" />
+
+                        <com.maple.smartcan.view.PercentLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:orientation="horizontal"
+                            app:layout_heightPercent="30%">
+
+                            <com.maple.smartcan.view.PercentLinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                app:layout_widthPercent="25%">
+
+                                <com.maple.smartcan.view.PercentLinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:orientation="horizontal"
+                                    app:layout_heightPercent="40%">
+
+                                    <ImageView
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="fitCenter"
+                                        android:src="@drawable/temprature"
+                                        app:layout_widthPercent="50%" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
+                                        android:ellipsize="end"
+                                        android:singleLine="true"
+                                        android:text="@string/temprature"
+                                        android:textColor="@color/stringcolor_black"
+                                        android:textSize="25sp" />
+                                </com.maple.smartcan.view.PercentLinearLayout>
+
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <TextView
+                                        android:id="@+id/mainac_despane_temprature"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:text=""
+                                        android:textColor="@color/stringcolor_black"
+                                        android:textSize="35sp"
+                                        android:textStyle="bold" />
+                                </FrameLayout>
+                            </com.maple.smartcan.view.PercentLinearLayout>
+
+                            <com.maple.smartcan.view.PercentLinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                app:layout_widthPercent="25%">
+
+                                <com.maple.smartcan.view.PercentLinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:orientation="horizontal"
+                                    app:layout_heightPercent="40%">
+
+                                    <ImageView
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="fitCenter"
+                                        android:src="@drawable/water"
+                                        app:layout_widthPercent="50%" />
+
+                                    <TextView
+
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
+                                        android:ellipsize="end"
+                                        android:singleLine="true"
+                                        android:text="@string/water"
+                                        android:textColor="@color/stringcolor_black"
+                                        android:textSize="25sp" />
+                                </com.maple.smartcan.view.PercentLinearLayout>
+
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <TextView
+                                        android:id="@+id/mainac_despane_water"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:text=""
+                                        android:textColor="@color/stringcolor_black"
+                                        android:textSize="35sp"
+                                        android:textStyle="bold" />
+                                </FrameLayout>
+                            </com.maple.smartcan.view.PercentLinearLayout>
+
+                            <com.maple.smartcan.view.PercentLinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                app:layout_widthPercent="25%">
+
+                                <com.maple.smartcan.view.PercentLinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:orientation="horizontal"
+                                    app:layout_heightPercent="40%">
+
+                                    <ImageView
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="fitCenter"
+                                        android:src="@drawable/weight"
+                                        app:layout_widthPercent="50%" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
+                                        android:ellipsize="end"
+                                        android:singleLine="true"
+                                        android:text="@string/weight"
+                                        android:textColor="@color/stringcolor_black"
+                                        android:textSize="25sp" />
+                                </com.maple.smartcan.view.PercentLinearLayout>
+
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <TextView
+                                        android:id="@+id/mainac_despane_weight"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:text=""
+                                        android:textColor="@color/stringcolor_black"
+                                        android:textSize="35sp"
+                                        android:textStyle="bold" />
+                                </FrameLayout>
+                            </com.maple.smartcan.view.PercentLinearLayout>
+
+                            <com.maple.smartcan.view.PercentLinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                app:layout_widthPercent="25%">
+
+                                <com.maple.smartcan.view.PercentLinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:orientation="horizontal"
+                                    app:layout_heightPercent="40%">
+
+                                    <ImageView
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="fitCenter"
+                                        android:src="@drawable/firegas"
+                                        app:layout_widthPercent="50%" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
+                                        android:ellipsize="end"
+                                        android:singleLine="true"
+                                        android:text="@string/fire"
+                                        android:textColor="@color/stringcolor_black"
+                                        android:textSize="25sp" />
+                                </com.maple.smartcan.view.PercentLinearLayout>
+
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <TextView
+                                        android:id="@+id/mainac_despane_fire"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:text=""
+                                        android:textColor="@color/stringcolor_black"
+                                        android:textSize="35sp"
+                                        android:textStyle="bold" />
+                                </FrameLayout>
+                            </com.maple.smartcan.view.PercentLinearLayout>
+                        </com.maple.smartcan.view.PercentLinearLayout>
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:background="@color/background3" />
+
+                        <com.maple.smartcan.view.PercentLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:orientation="horizontal"
+                            app:layout_heightPercent="10%">
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/state"
+                                app:layout_heightPercent="80%"
+                                app:layout_widthPercent="10%" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/garbage_state"
+                                android:textColor="@color/stringcolor_blue"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/mainac_despane_garbagestate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/online"
+                                android:textColor="@color/viewback5"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+                        </com.maple.smartcan.view.PercentLinearLayout>
+
+                        <com.maple.smartcan.view.PercentLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:orientation="horizontal"
+                            app:layout_heightPercent="20%">
+
+                            <androidx.percentlayout.widget.PercentFrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                app:layout_widthPercent="50%">
+
+                                <FrameLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="0dp"
+                                    android:layout_gravity="center"
+                                    android:background="@color/background2"
+                                    app:layout_heightPercent="90%"
+                                    app:layout_widthPercent="90%">
+
+                                    <TextView
+                                        android:id="@+id/mainac_despane_garbagecloseoropen"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:text="@string/garbage_close"
+                                        android:textColor="@color/stringcolor_white"
+                                        android:textSize="35sp"
+                                        android:textStyle="bold" />
+                                </FrameLayout>
+                            </androidx.percentlayout.widget.PercentFrameLayout>
+
+                            <androidx.percentlayout.widget.PercentFrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                app:layout_widthPercent="50%">
+
+                                <FrameLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="0dp"
+                                    android:layout_gravity="center"
+                                    android:background="@color/viewback5"
+                                    app:layout_heightPercent="90%"
+                                    app:layout_widthPercent="90%">
+
+                                    <TextView
+                                        android:id="@+id/mainac_despane_scanon"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:text="@string/scan_on"
+                                        android:textColor="@color/stringcolor_white"
+                                        android:textSize="35sp"
+                                        android:textStyle="bold" />
+                                </FrameLayout>
+                            </androidx.percentlayout.widget.PercentFrameLayout>
+                        </com.maple.smartcan.view.PercentLinearLayout>
+
+                        <androidx.percentlayout.widget.PercentFrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="10dp"
+                            app:layout_heightPercent="20%">
+
+                            <FrameLayout
+                                android:id="@+id/mainac_despane_opencan"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_gravity="center"
+                                android:background="@color/background2"
+                                app:layout_heightPercent="90%"
+                                app:layout_widthPercent="95%">
+
+                                <TextView
+                                    android:id="@+id/mainac_despane_touchtoopen"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="@string/touchtoopen"
+                                    android:textColor="@color/stringcolor_white"
+                                    android:textSize="35sp"
+                                    android:textStyle="bold" />
+                            </FrameLayout>
+                        </androidx.percentlayout.widget.PercentFrameLayout>
+                    </com.maple.smartcan.view.PercentLinearLayout>
+
+                    <com.maple.smartcan.view.PercentLinearLayout
+                        android:id="@+id/mainac_despane_mainshow"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/background1"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <com.maple.smartcan.view.PercentLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:orientation="horizontal"
+                            app:layout_heightPercent="80%"
+                            app:layout_widthPercent="100%">
+
+                            <com.maple.smartcan.view.PercentLinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical"
+                                app:layout_widthPercent="25%">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:gravity="center"
+                                    android:text="@string/recycle"
+                                    android:textColor="@color/recycle"
+                                    android:textSize="35sp"
+                                    android:textStyle="bold"
+                                    app:layout_heightPercent="20%" />
+
+                                <ImageView
+                                    android:id="@+id/mainac_controlpane_recycle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:src="@drawable/recycle" />
+
+                            </com.maple.smartcan.view.PercentLinearLayout>
+
+                            <com.maple.smartcan.view.PercentLinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical"
+                                app:layout_widthPercent="25%">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:gravity="center"
+                                    android:text="@string/kitchen"
+                                    android:textColor="@color/kitchen"
+                                    android:textSize="35sp"
+                                    android:textStyle="bold"
+                                    app:layout_heightPercent="20%" />
+
+                                <ImageView
+                                    android:id="@+id/mainac_controlpane_kitchen"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:src="@drawable/kitchen_can" />
+
+                            </com.maple.smartcan.view.PercentLinearLayout>
+
+                            <com.maple.smartcan.view.PercentLinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical"
+                                app:layout_widthPercent="25%">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:gravity="center"
+                                    android:text="@string/other"
+                                    android:textColor="@color/other"
+                                    android:textSize="35sp"
+                                    android:textStyle="bold"
+                                    app:layout_heightPercent="20%" />
+
+                                <ImageView
+                                    android:id="@+id/mainac_controlpane_other"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:src="@drawable/other_can" />
+
+                            </com.maple.smartcan.view.PercentLinearLayout>
+
+                            <com.maple.smartcan.view.PercentLinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical"
+                                app:layout_widthPercent="25%">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:gravity="center"
+                                    android:text="@string/harmful"
+                                    android:textColor="@color/harm"
+                                    android:textSize="35sp"
+                                    android:textStyle="bold"
+                                    app:layout_heightPercent="20%" />
+
+                                <ImageView
+                                    android:id="@+id/mainac_controlpane_harmful"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:src="@drawable/harmful_can" />
+
+                            </com.maple.smartcan.view.PercentLinearLayout>
+
+                        </com.maple.smartcan.view.PercentLinearLayout>
+
+                        <com.maple.smartcan.view.PercentLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                app:layout_widthPercent="25%">
+
+                                <TextView
+                                    android:id="@+id/mainac_controlpane_recycleopen"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="15dp"
+                                    android:background="#4895F8"
+                                    android:gravity="center"
+                                    android:text="@string/open"
+                                    android:textColor="@color/stringcolor_white"
+                                    android:textSize="35sp"
+                                    android:textStyle="bold" />
+                            </FrameLayout>
+
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                app:layout_widthPercent="25%">
+
+                                <TextView
+                                    android:id="@+id/mainac_controlpane_kitchenopen"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="15dp"
+                                    android:background="#7DA845"
+                                    android:gravity="center"
+                                    android:text="@string/open"
+                                    android:textColor="@color/stringcolor_white"
+                                    android:textSize="35sp"
+                                    android:textStyle="bold" />
+                            </FrameLayout>
+
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                app:layout_widthPercent="25%">
+
+                                <TextView
+                                    android:id="@+id/mainac_controlpane_otheropen"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="15dp"
+                                    android:background="#F6BF34"
+                                    android:gravity="center"
+                                    android:text="@string/open"
+                                    android:textColor="@color/stringcolor_white"
+                                    android:textSize="35sp"
+                                    android:textStyle="bold" />
+                            </FrameLayout>
+
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                app:layout_widthPercent="25%">
+
+                                <TextView
+                                    android:id="@+id/mainac_controlpane_harmfulopen"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="15dp"
+                                    android:background="#FF5756"
+                                    android:gravity="center"
+                                    android:text="@string/open"
+                                    android:textColor="@color/stringcolor_white"
+                                    android:textSize="35sp"
+                                    android:textStyle="bold" />
+                            </FrameLayout>
+                        </com.maple.smartcan.view.PercentLinearLayout>
+                    </com.maple.smartcan.view.PercentLinearLayout>
+                </FrameLayout>
+            </androidx.percentlayout.widget.PercentFrameLayout>
+
+            <androidx.percentlayout.widget.PercentFrameLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_heightPercent="100%"
+                app:layout_widthPercent="30%">
+
+                <com.maple.smartcan.view.PercentLinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:background="@color/background1"
+                    android:orientation="vertical"
+                    app:layout_heightPercent="90%"
+                    app:layout_widthPercent="90%">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/wechatscan"
+                        android:textColor="@color/stringcolor_grey"
+                        android:textSize="15sp"
+                        app:layout_heightPercent="10%" />
+
+                    <com.maple.smartcan.view.PercentLinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:orientation="horizontal"
+                        app:layout_heightPercent="20%">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/qrcode"
+                            app:layout_widthPercent="50%" />
+
+                    </com.maple.smartcan.view.PercentLinearLayout>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/background3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/input_phone"
+                        android:textColor="@color/stringcolor_black"
+                        android:textSize="25sp"
+                        android:textStyle="bold"
+                        app:layout_heightPercent="10%" />
+
+                    <com.maple.smartcan.view.PercentLinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <com.maple.smartcan.view.PercentLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            app:layout_heightPercent="33%">
+
+                            <FrameLayout
+                                android:id="@+id/mainac_controlpane_num1"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/border_pane"
+                                app:layout_widthPercent="25%">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="1"
+                                    android:textColor="@color/stringcolor_black"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold" />
+                            </FrameLayout>
+
+                            <FrameLayout
+                                android:id="@+id/mainac_controlpane_num2"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/border_pane"
+                                app:layout_widthPercent="25%">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="2"
+                                    android:textColor="@color/stringcolor_black"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold" />
+                            </FrameLayout>
+
+                            <FrameLayout
+                                android:id="@+id/mainac_controlpane_num3"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/border_pane"
+                                app:layout_widthPercent="25%">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="3"
+                                    android:textColor="@color/stringcolor_black"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold" />
+                            </FrameLayout>
+
+                            <FrameLayout
+                                android:id="@+id/mainac_controlpane_num4"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/border_pane"
+                                app:layout_widthPercent="25%">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="4"
+                                    android:textColor="@color/stringcolor_black"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold" />
+                            </FrameLayout>
+                        </com.maple.smartcan.view.PercentLinearLayout>
+
+                        <com.maple.smartcan.view.PercentLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            app:layout_heightPercent="33%">
+
+                            <FrameLayout
+                                android:id="@+id/mainac_controlpane_num5"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/border_pane"
+                                app:layout_widthPercent="25%">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="5"
+                                    android:textColor="@color/stringcolor_black"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold" />
+                            </FrameLayout>
+
+                            <FrameLayout
+                                android:id="@+id/mainac_controlpane_num6"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/border_pane"
+                                app:layout_widthPercent="25%">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="6"
+                                    android:textColor="@color/stringcolor_black"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold" />
+                            </FrameLayout>
+
+                            <FrameLayout
+                                android:id="@+id/mainac_controlpane_num7"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/border_pane"
+                                app:layout_widthPercent="25%">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="7"
+                                    android:textColor="@color/stringcolor_black"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold" />
+                            </FrameLayout>
+
+                            <FrameLayout
+                                android:id="@+id/mainac_controlpane_num8"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/border_pane"
+                                app:layout_widthPercent="25%">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="8"
+                                    android:textColor="@color/stringcolor_black"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold" />
+                            </FrameLayout>
+                        </com.maple.smartcan.view.PercentLinearLayout>
+
+                        <com.maple.smartcan.view.PercentLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:orientation="horizontal"
+                            app:layout_heightPercent="33%">
+
+                            <FrameLayout
+                                android:id="@+id/mainac_controlpane_num9"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/border_pane"
+                                app:layout_widthPercent="25%">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="9"
+                                    android:textColor="@color/stringcolor_black"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold" />
+                            </FrameLayout>
+
+                            <FrameLayout
+                                android:id="@+id/mainac_controlpane_num0"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/border_pane"
+                                app:layout_widthPercent="25%">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="0"
+                                    android:textColor="@color/stringcolor_black"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold" />
+                            </FrameLayout>
+
+                            <FrameLayout
+                                android:id="@+id/mainac_controlpane_agree"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/border_pane">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="@string/agree"
+                                    android:textColor="@color/stringcolor_black"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold" />
+                            </FrameLayout>
+
+                        </com.maple.smartcan.view.PercentLinearLayout>
+                    </com.maple.smartcan.view.PercentLinearLayout>
+                </com.maple.smartcan.view.PercentLinearLayout>
+            </androidx.percentlayout.widget.PercentFrameLayout>
+        </com.maple.smartcan.view.PercentLinearLayout>
+
+
+        <androidx.percentlayout.widget.PercentFrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_heightPercent="10%"
+            app:layout_widthPercent="70%">
+
+            <com.maple.smartcan.view.PercentLinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                app:layout_widthPercent="90%">
+                <ImageView
+                    android:id="@+id/mainac_controlpane_back"
+                    android:visibility="invisible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="5dp"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/back" />
+            </com.maple.smartcan.view.PercentLinearLayout>
+        </androidx.percentlayout.widget.PercentFrameLayout>
+
+    </com.maple.smartcan.view.PercentLinearLayout>
+
+</com.maple.smartcan.view.PercentLinearLayout>
