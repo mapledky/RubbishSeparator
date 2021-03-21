@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Binder;
@@ -21,11 +22,18 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.maple.smartcan.activity.MainActivity;
+import com.maple.smartcan.network.HttpHelper;
+import com.maple.smartcan.network.ServerCode;
+import com.maple.smartcan.util.MyLocationUtil;
 import com.maple.smartcan.util.order;
 
+import org.java_websocket.WebSocket;
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.handshake.ServerHandshake;
+
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 import android_serialport_api.SerialPort;
@@ -44,8 +52,12 @@ public class JWebService extends Service implements SerialPort.ReceiveListener {
     public SerialPort serialPort;//串口的相关实例
     public boolean isSerialPortOpen = false;//串口是否链接
 
+    public boolean isSocketOpen = false;
+
     public static String path;//硬件地址
     public static int baudrate;//串口的波特率
+
+    public static String Id;//垃圾桶的id
 
 
     public JWebService() {
@@ -87,6 +99,7 @@ public class JWebService extends Service implements SerialPort.ReceiveListener {
     private void registerBroacast() {
         registerBaudrateReceiver();//注册波特率接收器广播
         registerSendmsgReceiver();//发送串口信息的广播
+        registerOpenSocketReceiver();//请求链接socket
     }
 
 
@@ -94,10 +107,26 @@ public class JWebService extends Service implements SerialPort.ReceiveListener {
     @Override
     public void receiveMessage(byte[] message) {
         Intent intent_broad = new Intent();
-
         intent_broad.setAction("com.maple.backMsgReceiver");
         intent_broad.putExtra("content", message);
         sendBroadcast(intent_broad);
+    }
+
+    //打开套接字连接的广播
+    private class OpenSocketReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //获取前端请求连接套接字的请求
+            Id = intent.getStringExtra("Id");
+            openSocket();
+            isSocketOpen = true;
+        }
+    }
+
+    private void registerOpenSocketReceiver() {
+        OpenSocketReceiver receiver = new OpenSocketReceiver();
+        IntentFilter intentFilter = new IntentFilter("com.maple.openSocketReceiver");
+        registerReceiver(receiver, intentFilter);
     }
 
 
@@ -173,6 +202,42 @@ public class JWebService extends Service implements SerialPort.ReceiveListener {
         mHandler.postDelayed(heartBeatRunnable, HEART_BEAT_RATE);//开启心跳检测
     }
 
+    //打开套接字通讯
+    WebSocketClient webSocket = null;
+
+    private void openSocket() {
+        //获取地理位置信息
+        Location location = MyLocationUtil.getMyLocation(this);
+        if (location != null) {
+            double longitude = location.getLongitude();
+            double latitude = location.getLatitude();
+            URI serverURI = URI.create(HttpHelper.CONNECT_SOCKET + "/" + Id + "/" + latitude + "/" + longitude);
+            webSocket = new WebSocketClient(serverURI) {
+                @Override
+                public void onOpen(ServerHandshake handshakedata) {
+
+                }
+
+                @Override
+                public void onMessage(String message) {
+
+                }
+
+                @Override
+                public void onClose(int code, String reason, boolean remote) {
+
+                }
+
+                @Override
+                public void onError(Exception ex) {
+
+                }
+            };
+            webSocket.connect();
+        }
+    }
+
+
     //对网络的心跳检测
     private static final long HEART_BEAT_RATE = 1000;//每隔1秒进行一次对长连接的心跳检测
     private final Handler mHandler = new Handler();
@@ -221,6 +286,13 @@ public class JWebService extends Service implements SerialPort.ReceiveListener {
                         }
                         serialPort.addOrder(order_array);
                     }
+                }
+            }
+
+            //检测socket连接情况
+            if (webSocket != null) {
+                if (webSocket.isOpen()) {
+                    webSocket.send(ServerCode.CHECK_SOCKET);
                 }
             }
             //获取网络情况检测是否有网络连接

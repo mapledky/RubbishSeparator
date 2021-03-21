@@ -88,7 +88,6 @@ public class SettingActivity extends PermissionActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-        startServiceAndRegister();//启动服务
         registerBroadCast();//注册广播
 
         init();
@@ -194,15 +193,6 @@ public class SettingActivity extends PermissionActivity implements View.OnClickL
         pane.setEnableOverScrollDrag(true);
     }
 
-
-    private void startServiceAndRegister() {
-        startJWebSClientService();//开启service连接
-    }
-
-    private void startJWebSClientService() {
-        Intent intent = new Intent(SettingActivity.this, JWebService.class);
-        startService(intent);
-    }
 
     //通过对话框选择有效的串口硬件地址
     private void chooseLocation() {

@@ -23,9 +23,9 @@
                 android:id="@+id/setting_agreement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="invisible"
                 android:layout_gravity="right"
                 android:layout_margin="10dp"
-                android:text="@string/agreement"
                 android:textColor="@color/stringcolor_grey"
                 android:textSize="12sp" />
 

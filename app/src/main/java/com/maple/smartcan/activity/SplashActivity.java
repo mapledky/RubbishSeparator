@@ -3,6 +3,7 @@ package com.maple.smartcan.activity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,8 +12,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -21,6 +26,7 @@ import com.maple.smartcan.R;
 import com.maple.smartcan.network.HttpHelper;
 import com.maple.smartcan.network.ServerCode;
 import com.maple.smartcan.network.VollySimpleRequest;
+import com.maple.smartcan.service.JWebService;
 import com.maple.smartcan.view.AnimationButton.AnimationButton;
 import com.skyfishjy.library.RippleBackground;
 import com.wega.library.loadingDialog.LoadingDialog;
@@ -34,7 +40,6 @@ import java.util.Map;
 public class SplashActivity extends PermissionActivity {
 
     RippleBackground rippleBackground;//波纹动画
-    AnimationButton animationButton;//波纹动画
     private LoadingDialog loadingDialog;//加载框
 
     boolean permission = false;
@@ -44,6 +49,8 @@ public class SplashActivity extends PermissionActivity {
 
     private EditText et_account;
     private EditText et_password;
+    private Button bt_login;
+    private TextView tv_coder;
 
 
     @Override
@@ -57,18 +64,37 @@ public class SplashActivity extends PermissionActivity {
 
     private void init() {
         rippleBackground = findViewById(R.id.splash_ripple);
-        animationButton = findViewById(R.id.splash_login);
+        bt_login = findViewById(R.id.splash_login);
         et_account = findViewById(R.id.splash_account);
         et_password = findViewById(R.id.splash_password);
+        tv_coder = findViewById(R.id.splash_coder);
 
-        animationButton.setVisibility(View.INVISIBLE);
-        decorateLogin();//修饰登录动画按钮
+        tv_coder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SplashActivity.this,MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        bt_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkPermission()) {
+                    login();
+                }
+            }
+        });
+
+        bt_login.setClickable(false);
         rippleBackground.startRippleAnimation();//开启波纹动画
         //添加输入监控按钮
         addinputwatcher();
         decorateLoading();
         //获取缓存的账号数据
         getStorage();
+        //开启服务
+        startServiceAndRegister();
     }
 
     private void addinputwatcher() {
@@ -78,6 +104,7 @@ public class SplashActivity extends PermissionActivity {
 
             }
 
+            @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String account = et_account.getText().toString();
@@ -86,13 +113,15 @@ public class SplashActivity extends PermissionActivity {
                     if (!account.equals("")) {
                         if (password != null) {
                             if (!password.equals("")) {
-                                animationButton.setVisibility(View.VISIBLE);
+                                bt_login.setClickable(true);
+                                bt_login.setBackground(getResources().getDrawable(R.drawable.blue_roundedittext));
                                 return;
                             }
                         }
                     }
                 }
-                animationButton.setVisibility(View.INVISIBLE);
+                bt_login.setClickable(false);
+                bt_login.setBackground(getResources().getDrawable(R.drawable.grey_round_edit));
             }
 
             @Override
@@ -107,6 +136,7 @@ public class SplashActivity extends PermissionActivity {
 
             }
 
+            @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String password_ = et_password.getText().toString();
@@ -115,13 +145,15 @@ public class SplashActivity extends PermissionActivity {
                     if (!password_.equals("")) {
                         if (Id != null) {
                             if (!Id.equals("")) {
-                                animationButton.setVisibility(View.VISIBLE);
+                                bt_login.setClickable(true);
+                                bt_login.setBackground(getResources().getDrawable(R.drawable.blue_roundedittext));
                                 return;
                             }
                         }
                     }
                 }
-                animationButton.setVisibility(View.INVISIBLE);
+                bt_login.setClickable(false);
+                bt_login.setBackground(getResources().getDrawable(R.drawable.grey_round_edit));
             }
 
             @Override
@@ -131,6 +163,7 @@ public class SplashActivity extends PermissionActivity {
         });
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void getStorage() {
         SharedPreferences sharedPreferences = getSharedPreferences("account", Context.MODE_PRIVATE);
         String account = sharedPreferences.getString("Id", "");
@@ -141,7 +174,8 @@ public class SplashActivity extends PermissionActivity {
                 et_account.setText(account);
                 password = sharedPreferences.getString("password", "");
                 et_password.setText(password);
-                animationButton.setVisibility(View.VISIBLE);
+                bt_login.setClickable(true);
+                bt_login.setBackground(getResources().getDrawable(R.drawable.blue_roundedittext));
             }
         }
     }
@@ -157,30 +191,6 @@ public class SplashActivity extends PermissionActivity {
         loadingDialog.setCancelable(false);
     }
 
-
-    private void decorateLogin() {
-        animationButton.setText(getResources().getString(R.string.login));
-        animationButton.setColorBase(getResources().getColor(R.color.viewback3)); //设置整体基色，不设置有默认值
-        animationButton.setColorBack(Color.GRAY); //设置进度条的背景色，不设置有默认值
-        animationButton.setMode(AnimationButton.Mode.Hand_Finish); //设置进度条模式，不设置有默认值Mode.Auto_Finish
-        animationButton.setOnAnimationButtonClickListener(new AnimationButton.OnAnimationButtonClickListener() {
-            @Override
-            public void onClick() {
-                //stopProgress方法 仅仅在button.setMode(AnimationButton.Mode.Hand_Finish);之后才有效。
-                animationButton.stopProgress();
-            }
-
-            @Override
-            public void finish() {
-                login();
-            }
-
-            @Override
-            public boolean check() {
-                return checkPermission();
-            }
-        });
-    }
 
     //检查权限
     private boolean checkPermission() {
@@ -201,6 +211,12 @@ public class SplashActivity extends PermissionActivity {
 
     //登陆
     private void login() {
+        if (Id == null || password == null) {
+            return;
+        }
+        if (Id.equals("") || password.equals("")) {
+            return;
+        }
         loadingDialog.loading();
         Map<String, String> params = new HashMap<>();
         params.put("requestCode", ServerCode.LOGIN_ACCOUNT);
@@ -222,12 +238,12 @@ public class SplashActivity extends PermissionActivity {
                         editor.putString("Id", Id);
                         editor.putString("password", password);
                         editor.commit();
-                        loadingDialog.loadSuccess();
-                        toMain();
+                        connectSocket();//连接socket
                     } else {
                         loadingDialog.loadFail();
                     }
                 } catch (JSONException e) {
+                    loadingDialog.loadFail();
                     e.printStackTrace();
                 }
             }
@@ -240,6 +256,26 @@ public class SplashActivity extends PermissionActivity {
     }
 
 
+    //连接socket
+    private void connectSocket() {
+        Intent intent_broad = new Intent();
+        intent_broad.setAction("com.maple.openSocketReceiver");
+        intent_broad.putExtra("Id", Id);
+        sendBroadcast(intent_broad);
+        loadingDialog.loadSuccess();
+        loadingDialog.dismiss();
+        toMain();
+    }
+
+    private void startServiceAndRegister() {
+        startJWebSClientService();//开启service连接
+    }
+
+    private void startJWebSClientService() {
+        Intent intent = new Intent(SplashActivity.this, JWebService.class);
+        startService(intent);
+    }
+
     //前往main
     private void toMain() {
         Intent intent = new Intent(this, SettingActivity.class);
@@ -248,5 +284,6 @@ public class SplashActivity extends PermissionActivity {
         overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
         finish();
     }
+
 
 }

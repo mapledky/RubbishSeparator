@@ -44,7 +44,7 @@
                     android:singleLine="true"
                     android:text=""
                     android:textColor="@color/stringcolor_grey"
-                    android:textSize="25sp" />
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -64,7 +64,7 @@
                     android:singleLine="true"
                     android:text=""
                     android:textColor="@color/stringcolor_grey"
-                    android:textSize="25dp"
+                    android:textSize="20dp"
                     app:layout_widthPercent="100%" />
             </LinearLayout>
         </com.maple.smartcan.view.PercentLinearLayout>
@@ -103,7 +103,7 @@
                 android:singleLine="true"
                 android:text="@string/mainac_hello"
                 android:textColor="@color/stringcolor_black"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 app:layout_widthPercent="50%" />
 
 
@@ -161,7 +161,7 @@
                             android:gravity="center_vertical"
                             android:text="@string/garbage_data"
                             android:textColor="@color/stringcolor_black"
-                            android:textSize="20sp"
+                            android:textSize="15sp"
                             app:layout_heightPercent="10%" />
 
                         <com.maple.smartcan.view.PercentLinearLayout
@@ -197,7 +197,7 @@
                                         android:singleLine="true"
                                         android:text="@string/temprature"
                                         android:textColor="@color/stringcolor_black"
-                                        android:textSize="25sp" />
+                                        android:textSize="20sp" />
                                 </com.maple.smartcan.view.PercentLinearLayout>
 
                                 <FrameLayout
@@ -211,7 +211,7 @@
                                         android:layout_gravity="center"
                                         android:text=""
                                         android:textColor="@color/stringcolor_black"
-                                        android:textSize="35sp"
+                                        android:textSize="30sp"
                                         android:textStyle="bold" />
                                 </FrameLayout>
                             </com.maple.smartcan.view.PercentLinearLayout>
@@ -244,7 +244,7 @@
                                         android:singleLine="true"
                                         android:text="@string/water"
                                         android:textColor="@color/stringcolor_black"
-                                        android:textSize="25sp" />
+                                        android:textSize="20sp" />
                                 </com.maple.smartcan.view.PercentLinearLayout>
 
                                 <FrameLayout
@@ -258,7 +258,7 @@
                                         android:layout_gravity="center"
                                         android:text=""
                                         android:textColor="@color/stringcolor_black"
-                                        android:textSize="35sp"
+                                        android:textSize="30sp"
                                         android:textStyle="bold" />
                                 </FrameLayout>
                             </com.maple.smartcan.view.PercentLinearLayout>
@@ -290,7 +290,7 @@
                                         android:singleLine="true"
                                         android:text="@string/weight"
                                         android:textColor="@color/stringcolor_black"
-                                        android:textSize="25sp" />
+                                        android:textSize="20sp" />
                                 </com.maple.smartcan.view.PercentLinearLayout>
 
                                 <FrameLayout
@@ -304,7 +304,7 @@
                                         android:layout_gravity="center"
                                         android:text=""
                                         android:textColor="@color/stringcolor_black"
-                                        android:textSize="35sp"
+                                        android:textSize="30sp"
                                         android:textStyle="bold" />
                                 </FrameLayout>
                             </com.maple.smartcan.view.PercentLinearLayout>
@@ -336,7 +336,7 @@
                                         android:singleLine="true"
                                         android:text="@string/fire"
                                         android:textColor="@color/stringcolor_black"
-                                        android:textSize="25sp" />
+                                        android:textSize="20sp" />
                                 </com.maple.smartcan.view.PercentLinearLayout>
 
                                 <FrameLayout
@@ -350,7 +350,7 @@
                                         android:layout_gravity="center"
                                         android:text=""
                                         android:textColor="@color/stringcolor_black"
-                                        android:textSize="35sp"
+                                        android:textSize="30sp"
                                         android:textStyle="bold" />
                                 </FrameLayout>
                             </com.maple.smartcan.view.PercentLinearLayout>
@@ -384,7 +384,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:text="@string/garbage_state"
                                 android:textColor="@color/stringcolor_blue"
-                                android:textSize="20sp"
+                                android:textSize="15sp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -394,7 +394,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:text="@string/online"
                                 android:textColor="@color/viewback5"
-                                android:textSize="20sp"
+                                android:textSize="15sp"
                                 android:textStyle="bold" />
                         </com.maple.smartcan.view.PercentLinearLayout>
 
@@ -424,7 +424,7 @@
                                         android:layout_gravity="center"
                                         android:text="@string/garbage_close"
                                         android:textColor="@color/stringcolor_white"
-                                        android:textSize="35sp"
+                                        android:textSize="30sp"
                                         android:textStyle="bold" />
                                 </FrameLayout>
                             </androidx.percentlayout.widget.PercentFrameLayout>
@@ -449,7 +449,7 @@
                                         android:layout_gravity="center"
                                         android:text="@string/scan_on"
                                         android:textColor="@color/stringcolor_white"
-                                        android:textSize="35sp"
+                                        android:textSize="30sp"
                                         android:textStyle="bold" />
                                 </FrameLayout>
                             </androidx.percentlayout.widget.PercentFrameLayout>
@@ -477,7 +477,7 @@
                                     android:layout_gravity="center"
                                     android:text="@string/touchtoopen"
                                     android:textColor="@color/stringcolor_white"
-                                    android:textSize="35sp"
+                                    android:textSize="30sp"
                                     android:textStyle="bold" />
                             </FrameLayout>
                         </androidx.percentlayout.widget.PercentFrameLayout>
@@ -487,6 +487,7 @@
                         android:id="@+id/mainac_despane_mainshow"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+
                         android:background="@color/background1"
                         android:orientation="vertical"
                         android:visibility="visible">
@@ -511,7 +512,7 @@
                                     android:gravity="center"
                                     android:text="@string/recycle"
                                     android:textColor="@color/recycle"
-                                    android:textSize="35sp"
+                                    android:textSize="25sp"
                                     android:textStyle="bold"
                                     app:layout_heightPercent="20%" />
 
@@ -538,7 +539,7 @@
                                     android:gravity="center"
                                     android:text="@string/kitchen"
                                     android:textColor="@color/kitchen"
-                                    android:textSize="35sp"
+                                    android:textSize="25sp"
                                     android:textStyle="bold"
                                     app:layout_heightPercent="20%" />
 
@@ -565,7 +566,7 @@
                                     android:gravity="center"
                                     android:text="@string/other"
                                     android:textColor="@color/other"
-                                    android:textSize="35sp"
+                                    android:textSize="25sp"
                                     android:textStyle="bold"
                                     app:layout_heightPercent="20%" />
 
@@ -592,7 +593,7 @@
                                     android:gravity="center"
                                     android:text="@string/harmful"
                                     android:textColor="@color/harm"
-                                    android:textSize="35sp"
+                                    android:textSize="25sp"
                                     android:textStyle="bold"
                                     app:layout_heightPercent="20%" />
 
@@ -622,12 +623,14 @@
                                     android:id="@+id/mainac_controlpane_recycleopen"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:layout_margin="15dp"
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_marginBottom="2dp"
+                                    android:layout_marginRight="2dp"
                                     android:background="#4895F8"
                                     android:gravity="center"
                                     android:text="@string/open"
                                     android:textColor="@color/stringcolor_white"
-                                    android:textSize="35sp"
+                                    android:textSize="25sp"
                                     android:textStyle="bold" />
                             </FrameLayout>
 
@@ -640,12 +643,14 @@
                                     android:id="@+id/mainac_controlpane_kitchenopen"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:layout_margin="15dp"
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_marginBottom="2dp"
+                                    android:layout_marginRight="2dp"
                                     android:background="#7DA845"
                                     android:gravity="center"
                                     android:text="@string/open"
                                     android:textColor="@color/stringcolor_white"
-                                    android:textSize="35sp"
+                                    android:textSize="25sp"
                                     android:textStyle="bold" />
                             </FrameLayout>
 
@@ -658,12 +663,14 @@
                                     android:id="@+id/mainac_controlpane_otheropen"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:layout_margin="15dp"
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_marginBottom="2dp"
+                                    android:layout_marginRight="2dp"
                                     android:background="#F6BF34"
                                     android:gravity="center"
                                     android:text="@string/open"
                                     android:textColor="@color/stringcolor_white"
-                                    android:textSize="35sp"
+                                    android:textSize="25sp"
                                     android:textStyle="bold" />
                             </FrameLayout>
 
@@ -676,12 +683,14 @@
                                     android:id="@+id/mainac_controlpane_harmfulopen"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:layout_margin="15dp"
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_marginBottom="2dp"
+                                    android:layout_marginRight="2dp"
                                     android:background="#FF5756"
                                     android:gravity="center"
                                     android:text="@string/open"
                                     android:textColor="@color/stringcolor_white"
-                                    android:textSize="35sp"
+                                    android:textSize="32sp"
                                     android:textStyle="bold" />
                             </FrameLayout>
                         </com.maple.smartcan.view.PercentLinearLayout>
@@ -721,6 +730,7 @@
                         app:layout_heightPercent="20%">
 
                         <ImageView
+                            android:layout_margin="1dp"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:scaleType="fitCenter"
@@ -733,9 +743,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="3dp"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="1dp"
                         android:layout_marginRight="20dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="1dp"
                         android:background="@color/background3" />
 
                     <TextView
@@ -745,7 +755,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/input_phone"
                         android:textColor="@color/stringcolor_black"
-                        android:textSize="25sp"
+                        android:textSize="15sp"
                         android:textStyle="bold"
                         app:layout_heightPercent="10%" />
 
@@ -759,7 +769,7 @@
                             android:layout_height="0dp"
                             android:gravity="center"
                             android:orientation="horizontal"
-                            app:layout_heightPercent="33%">
+                            app:layout_heightPercent="33.3333%">
 
                             <FrameLayout
                                 android:id="@+id/mainac_controlpane_num1"
@@ -774,7 +784,7 @@
                                     android:layout_gravity="center"
                                     android:text="1"
                                     android:textColor="@color/stringcolor_black"
-                                    android:textSize="30sp"
+                                    android:textSize="20sp"
                                     android:textStyle="bold" />
                             </FrameLayout>
 
@@ -791,7 +801,7 @@
                                     android:layout_gravity="center"
                                     android:text="2"
                                     android:textColor="@color/stringcolor_black"
-                                    android:textSize="30sp"
+                                    android:textSize="20sp"
                                     android:textStyle="bold" />
                             </FrameLayout>
 
@@ -808,7 +818,7 @@
                                     android:layout_gravity="center"
                                     android:text="3"
                                     android:textColor="@color/stringcolor_black"
-                                    android:textSize="30sp"
+                                    android:textSize="20sp"
                                     android:textStyle="bold" />
                             </FrameLayout>
 
@@ -825,7 +835,7 @@
                                     android:layout_gravity="center"
                                     android:text="4"
                                     android:textColor="@color/stringcolor_black"
-                                    android:textSize="30sp"
+                                    android:textSize="20sp"
                                     android:textStyle="bold" />
                             </FrameLayout>
                         </com.maple.smartcan.view.PercentLinearLayout>
@@ -835,7 +845,7 @@
                             android:layout_height="0dp"
                             android:gravity="center"
                             android:orientation="horizontal"
-                            app:layout_heightPercent="33%">
+                            app:layout_heightPercent="33.333%">
 
                             <FrameLayout
                                 android:id="@+id/mainac_controlpane_num5"
@@ -850,7 +860,7 @@
                                     android:layout_gravity="center"
                                     android:text="5"
                                     android:textColor="@color/stringcolor_black"
-                                    android:textSize="30sp"
+                                    android:textSize="20sp"
                                     android:textStyle="bold" />
                             </FrameLayout>
 
@@ -867,7 +877,7 @@
                                     android:layout_gravity="center"
                                     android:text="6"
                                     android:textColor="@color/stringcolor_black"
-                                    android:textSize="30sp"
+                                    android:textSize="20sp"
                                     android:textStyle="bold" />
                             </FrameLayout>
 
@@ -884,7 +894,7 @@
                                     android:layout_gravity="center"
                                     android:text="7"
                                     android:textColor="@color/stringcolor_black"
-                                    android:textSize="30sp"
+                                    android:textSize="20sp"
                                     android:textStyle="bold" />
                             </FrameLayout>
 
@@ -901,7 +911,7 @@
                                     android:layout_gravity="center"
                                     android:text="8"
                                     android:textColor="@color/stringcolor_black"
-                                    android:textSize="30sp"
+                                    android:textSize="20sp"
                                     android:textStyle="bold" />
                             </FrameLayout>
                         </com.maple.smartcan.view.PercentLinearLayout>
@@ -910,7 +920,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:orientation="horizontal"
-                            app:layout_heightPercent="33%">
+                            app:layout_heightPercent="33.3333%">
 
                             <FrameLayout
                                 android:id="@+id/mainac_controlpane_num9"
@@ -925,7 +935,7 @@
                                     android:layout_gravity="center"
                                     android:text="9"
                                     android:textColor="@color/stringcolor_black"
-                                    android:textSize="30sp"
+                                    android:textSize="20sp"
                                     android:textStyle="bold" />
                             </FrameLayout>
 
@@ -942,7 +952,7 @@
                                     android:layout_gravity="center"
                                     android:text="0"
                                     android:textColor="@color/stringcolor_black"
-                                    android:textSize="30sp"
+                                    android:textSize="20sp"
                                     android:textStyle="bold" />
                             </FrameLayout>
 
@@ -958,7 +968,7 @@
                                     android:layout_gravity="center"
                                     android:text="@string/agree"
                                     android:textColor="@color/stringcolor_black"
-                                    android:textSize="30sp"
+                                    android:textSize="20sp"
                                     android:textStyle="bold" />
                             </FrameLayout>
 
