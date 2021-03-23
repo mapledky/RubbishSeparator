@@ -5,6 +5,8 @@ public class SmartCanUtil {
     public float water = 0;
     public float fire = 0;
     public float weight = 0;
+
+    public int distant = 10000;
     public int canstate = 0;
     public int openstate = 0;
 

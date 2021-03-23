@@ -624,8 +624,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginLeft="2dp"
-                                    android:layout_marginBottom="2dp"
                                     android:layout_marginRight="2dp"
+                                    android:layout_marginBottom="2dp"
                                     android:background="#4895F8"
                                     android:gravity="center"
                                     android:text="@string/open"
@@ -644,8 +644,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginLeft="2dp"
-                                    android:layout_marginBottom="2dp"
                                     android:layout_marginRight="2dp"
+                                    android:layout_marginBottom="2dp"
                                     android:background="#7DA845"
                                     android:gravity="center"
                                     android:text="@string/open"
@@ -664,8 +664,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginLeft="2dp"
-                                    android:layout_marginBottom="2dp"
                                     android:layout_marginRight="2dp"
+                                    android:layout_marginBottom="2dp"
                                     android:background="#F6BF34"
                                     android:gravity="center"
                                     android:text="@string/open"
@@ -684,8 +684,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginLeft="2dp"
-                                    android:layout_marginBottom="2dp"
                                     android:layout_marginRight="2dp"
+                                    android:layout_marginBottom="2dp"
                                     android:background="#FF5756"
                                     android:gravity="center"
                                     android:text="@string/open"
@@ -730,9 +730,9 @@
                         app:layout_heightPercent="20%">
 
                         <ImageView
-                            android:layout_margin="1dp"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
+                            android:layout_margin="1dp"
                             android:scaleType="fitCenter"
                             android:src="@drawable/qrcode"
                             app:layout_widthPercent="50%" />
@@ -748,16 +748,34 @@
                         android:layout_marginBottom="1dp"
                         android:background="@color/background3" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <FrameLayout
+                        android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_marginLeft="10dp"
-                        android:gravity="center_vertical"
-                        android:text="@string/input_phone"
-                        android:textColor="@color/stringcolor_black"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        app:layout_heightPercent="10%" />
+                        app:layout_heightPercent="10%">
+
+                        <TextView
+                            android:id="@+id/mainac_controlpane_inputphone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:gravity="center_vertical"
+                            android:singleLine="true"
+                            android:text="@string/input_phone"
+                            android:textColor="@color/stringcolor_black"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:id="@+id/mainac_controlpane_clearphone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/clear"
+                            android:textColor="@color/stringcolor_black"
+                            android:textSize="15sp"
+                            android:layout_gravity="right"
+                            android:layout_margin="1dp"
+                            android:background="@color/viewback4"/>
+                    </FrameLayout>
 
                     <com.maple.smartcan.view.PercentLinearLayout
                         android:layout_width="match_parent"
@@ -991,14 +1009,15 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
                 app:layout_widthPercent="90%">
+
                 <ImageView
                     android:id="@+id/mainac_controlpane_back"
-                    android:visibility="invisible"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="5dp"
                     android:scaleType="fitStart"
-                    android:src="@drawable/back" />
+                    android:src="@drawable/back"
+                    android:visibility="invisible" />
             </com.maple.smartcan.view.PercentLinearLayout>
         </androidx.percentlayout.widget.PercentFrameLayout>
 

@@ -100,8 +100,8 @@ public class JWebService extends Service implements SerialPort.ReceiveListener {
         registerBaudrateReceiver();//注册波特率接收器广播
         registerSendmsgReceiver();//发送串口信息的广播
         registerOpenSocketReceiver();//请求链接socket
+        registerSendSocketMsgReceiver();//发送套接字信息的广播
     }
-
 
     //获取到串口返回的数据
     @Override
@@ -110,6 +110,26 @@ public class JWebService extends Service implements SerialPort.ReceiveListener {
         intent_broad.setAction("com.maple.backMsgReceiver");
         intent_broad.putExtra("content", message);
         sendBroadcast(intent_broad);
+    }
+
+    //发送套接字信息广播
+    private class SendSocketMsgReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //获取前端请求发送套接字信息的请求
+            String message = intent.getStringExtra("message");
+            if (webSocket != null) {
+                if (webSocket.isOpen()) {
+                    webSocket.send(message);
+                }
+            }
+        }
+    }
+
+    private void registerSendSocketMsgReceiver() {
+        SendSocketMsgReceiver receiver = new SendSocketMsgReceiver();
+        IntentFilter intentFilter = new IntentFilter("com.maple.sendSocketMsgReceiver");
+        registerReceiver(receiver, intentFilter);
     }
 
     //打开套接字连接的广播

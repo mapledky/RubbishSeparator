@@ -53,4 +53,6 @@
     <string name="code">编号:</string>
     <string name="full">已满</string>
     <string name="touchtoclose">点击关闭垃圾桶</string>
+    <string name="coder_tune">开发者通道</string>
+    <string name="clear">清空</string>
 </resources>

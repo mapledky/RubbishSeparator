@@ -51,4 +51,6 @@
     <string name="code">code:</string>
     <string name="full">full</string>
     <string name="touchtoclose">touch to close</string>
+    <string name="coder_tune">coder tune</string>
+    <string name="clear">clear</string>
 </resources>

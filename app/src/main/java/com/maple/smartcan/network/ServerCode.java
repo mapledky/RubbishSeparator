@@ -7,6 +7,7 @@ public class ServerCode {
 
 
     //socket
-    public static final String CHECK_SOCKET = "1001";
+    public static final String CHECK_SOCKET = "1001";//心跳检测链接
+    public static final String UPLOAD_DATA = "1002";//上传数据到服务器
 
 }
