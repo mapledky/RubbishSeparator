@@ -21,6 +21,10 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.maple.smartcan.activity.MainActivity;
 import com.maple.smartcan.network.HttpHelper;
 import com.maple.smartcan.network.ServerCode;
@@ -34,6 +38,8 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import android_serialport_api.SerialPort;
@@ -101,6 +107,7 @@ public class JWebService extends Service implements SerialPort.ReceiveListener {
         registerSendmsgReceiver();//发送串口信息的广播
         registerOpenSocketReceiver();//请求链接socket
         registerSendSocketMsgReceiver();//发送套接字信息的广播
+        registerLocationListener();//位置信息
     }
 
     //获取到串口返回的数据
@@ -138,8 +145,8 @@ public class JWebService extends Service implements SerialPort.ReceiveListener {
         public void onReceive(Context context, Intent intent) {
             //获取前端请求连接套接字的请求
             Id = intent.getStringExtra("Id");
-            openSocket();
-            isSocketOpen = true;
+            //获取地理位置信息
+            MyLocationUtil.getLocationByGaode(JWebService.this);
         }
     }
 
@@ -168,6 +175,7 @@ public class JWebService extends Service implements SerialPort.ReceiveListener {
         SendMessageReceiver receiver = new SendMessageReceiver();
         IntentFilter intentFilter = new IntentFilter("com.maple.sendMsgReceiver");
         registerReceiver(receiver, intentFilter);
+
     }
 
     //接受波特率参数的广播
@@ -202,6 +210,25 @@ public class JWebService extends Service implements SerialPort.ReceiveListener {
     }
 
 
+    //获取地理位置信息的接口
+    private class ReceiverLocationListener extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (!isSocketOpen) {
+                isSocketOpen = true;
+                Log.i("locationinfo",intent.getStringExtra("latitude")+"  "+intent.getStringExtra("longitude"));
+                openSocket(intent.getStringExtra("latitude"), intent.getStringExtra("longitude"));
+            }
+        }
+    }
+
+    private void registerLocationListener() {
+        ReceiverLocationListener receiverLocationListener = new ReceiverLocationListener();
+        IntentFilter intentFilter = new IntentFilter("com.maple.locationReceiver");
+        registerReceiver(receiverLocationListener, intentFilter);
+    }
+
+
     /*
     开启串口
      */
@@ -225,36 +252,32 @@ public class JWebService extends Service implements SerialPort.ReceiveListener {
     //打开套接字通讯
     WebSocketClient webSocket = null;
 
-    private void openSocket() {
-        //获取地理位置信息
-        Location location = MyLocationUtil.getMyLocation(this);
-        if (location != null) {
-            double longitude = location.getLongitude();
-            double latitude = location.getLatitude();
-            URI serverURI = URI.create(HttpHelper.CONNECT_SOCKET + "/" + Id + "/" + latitude + "/" + longitude);
-            webSocket = new WebSocketClient(serverURI) {
-                @Override
-                public void onOpen(ServerHandshake handshakedata) {
 
-                }
+    private void openSocket(String latitude, String longitude) {
+        URI serverURI = URI.create(HttpHelper.CONNECT_SOCKET + "/" + Id + "/" + latitude + "/" + longitude);
+        webSocket = new WebSocketClient(serverURI) {
+            @Override
+            public void onOpen(ServerHandshake handshakedata) {
 
-                @Override
-                public void onMessage(String message) {
+            }
 
-                }
+            @Override
+            public void onMessage(String message) {
 
-                @Override
-                public void onClose(int code, String reason, boolean remote) {
+            }
 
-                }
+            @Override
+            public void onClose(int code, String reason, boolean remote) {
 
-                @Override
-                public void onError(Exception ex) {
+            }
 
-                }
-            };
-            webSocket.connect();
-        }
+            @Override
+            public void onError(Exception ex) {
+
+            }
+        };
+        webSocket.connect();
+
     }
 
 

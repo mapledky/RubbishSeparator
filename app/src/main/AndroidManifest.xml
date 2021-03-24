@@ -18,6 +18,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!--用于申请调用A-GPS模块-->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
 
     <application
         android:allowBackup="true"
@@ -27,7 +29,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".wxapi.WXEntryActivity"
+        <activity
+            android:name=".wxapi.WXEntryActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -38,13 +41,15 @@
             android:name=".service.JWebService"
             android:exported="false" />
 
+        <service android:name="com.amap.api.location.APSService" />
+
         <activity
             android:name=".activity.SettingActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.SplashActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -55,5 +60,7 @@
             android:name=".activity.MainActivity"
             android:screenOrientation="landscape" />
     </application>
-
+    <meta-data
+        android:name="com.amap.api.v2.apikey"
+        android:value="28be7b4e1fe833a76cb24785d9050116" />
 </manifest>

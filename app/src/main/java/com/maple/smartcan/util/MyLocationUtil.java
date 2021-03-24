@@ -2,14 +2,23 @@ package com.maple.smartcan.util;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MyLocationUtil {
     private static String provider;
@@ -46,5 +55,29 @@ public class MyLocationUtil {
         return null;
     }
 
+    public static void getLocationByGaode(Context context) {
+        AMapLocationListener mLocationListener;
+        mLocationListener = aMapLocation -> {
+            if (aMapLocation != null) {
+                if (aMapLocation.getErrorCode() == 0) {
+                    //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                    Intent intent = new Intent();
+                    intent.setAction("com.maple.locationReceiver");
+                    intent.putExtra("latitude", String.valueOf(aMapLocation.getLatitude()));
+                    intent.putExtra("longitude", String.valueOf(aMapLocation.getLongitude()));
+                    context.sendBroadcast(intent);
+                }
+            }
+        };
+        AMapLocationClient mLocationClient = new AMapLocationClient(context);
+        AMapLocationClientOption mapLocationClientOption = new AMapLocationClientOption();
+        mapLocationClientOption.setOnceLocationLatest(true);
+
+        if (null != mLocationClient) {
+            mLocationClient.setLocationOption(mapLocationClientOption);
+            mLocationClient.setLocationListener(mLocationListener);
+            mLocationClient.startLocation();
+        }
+    }
 }
 
