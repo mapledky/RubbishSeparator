@@ -185,22 +185,19 @@ public class SerialPort {
 
     //发送信息的线程
     private void sendDataThread() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (isPortOpen){
-                    byte[] order = null;
-                    try {
-                        order = orderlist.take();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    sendData(order);
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+        new Thread(() -> {
+            while (isPortOpen){
+                byte[] order = null;
+                try {
+                    order = orderlist.take();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                sendData(order);
+                try {
+                    Thread.sleep(20);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }).start();

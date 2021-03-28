@@ -3,6 +3,7 @@ package com.maple.smartcan.activity;
 import androidx.annotation.NonNull;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -43,9 +44,13 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class MainActivity extends PermissionActivity implements View.OnClickListener {
+
+    private boolean isopen = true;
 
     private LoadingDialog loadingDialog;
 
@@ -60,6 +65,9 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
     private TextView tv_weight;//重量显示
     private TextView tv_fire;//可燃性气体显示
     private TextView tv_garbagestate;//垃圾桶状态显示：已满或否
+    private TextView tv_weightstate;//重量状态
+    private TextView tv_tempstate;//温度状态
+
     private TextView tv_garbageCloseorOn;//垃圾桶开合状态显示
     private FrameLayout frameLayout_open;//开启垃圾桶
     private TextView tv_touchtoopen;//开启
@@ -76,6 +84,8 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
     private TextView tv_name;
     private TextView tv_phone;
     private TextView tv_score;
+    private TextView tv_scanqr;
+
 
     private String inputphoneNumber = "";//输入的电话号码
 
@@ -106,6 +116,7 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
     private final int TIME_CHANGE = 201;
     private final int REFRESH_UI = 202;
     private final int REFRESH_USERINFO = 203;
+    private final int GETQR = 204;
 
     @SuppressLint("HandlerLeak")
     private final Handler handler = new Handler() {
@@ -123,6 +134,10 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
                 case REFRESH_USERINFO:
                     refreshUserUi();
                     break;
+
+                case GETQR:
+                    getQRCode((byte[]) msg.obj);
+                    break;
                 default:
                     break;
             }
@@ -130,13 +145,19 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
     };
 
 
-    @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
 
         registerAllBroad();
+    }
+
+    @Override
+    protected void onDestroy() {
+        isopen = false;
+        super.onDestroy();
     }
 
     @SuppressLint("SetTextI18n")
@@ -152,6 +173,9 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
         tv_weight = findViewById(R.id.mainac_despane_weight);
         tv_fire = findViewById(R.id.mainac_despane_fire);
         tv_garbagestate = findViewById(R.id.mainac_despane_garbagestate);
+        tv_weightstate = findViewById(R.id.mainac_despane_garbageweight_state);
+        tv_tempstate = findViewById(R.id.mainac_despane_garbageweight_temp);
+
         tv_garbageCloseorOn = findViewById(R.id.mainac_despane_garbagecloseoropen);
         tv_touchtoopen = findViewById(R.id.mainac_despane_touchtoopen);
 
@@ -185,6 +209,7 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
         tv_name = findViewById(R.id.userinfo_name);
         tv_phone = findViewById(R.id.userinfo_phone);
         tv_score = findViewById(R.id.userinfo_score);
+        tv_scanqr = findViewById(R.id.text_scan_qrcode);
 
         Button bt_clear = findViewById(R.id.mainac_controlpane_clearphone);
 
@@ -240,11 +265,11 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
         //更新数据线程
         refreshCanData();
         //通过socket上传数据到服务器
-        uploadDataWithSocket();
+        //uploadDataWithSocket();
         //轮训判断,当垃圾桶开启，且超声波测距大于一米时，垃圾桶关闭，小于一米时垃圾桶开启
         canAutoOpenControl();
         //用户信息刷新
-        refreshDefaultUserInfo();
+        //refreshDefaultUserInfo();
     }
 
     //装饰加载条
@@ -485,7 +510,7 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
     //用户信息刷新县城
     private void refreshDefaultUserInfo() {
         new Thread(() -> {
-            while (true) {
+            while (isopen) {
                 if (refreshUserInfo == 0) {
                     headstate = "0";
                     name = getResources().getString(R.string.username);
@@ -510,7 +535,7 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
     //开启时钟线程
     private void timeThread() {
         new Thread(() -> {
-            while (true) {
+            while (isopen) {
                 @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("MM月dd日 HH时mm分");
                 Date date = new Date(System.currentTimeMillis());
                 String time = sdf.format(date);
@@ -531,7 +556,7 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
     //更新垃圾桶数据线程
     private void refreshCanData() {
         new Thread(() -> {
-            while (true) {
+            while (isopen) {
                 byte[] data = null;
                 try {
                     data = receive_candata.take();
@@ -550,12 +575,11 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
                         break;
                     case 2:
                         //可燃性气体浓度
-                        int number = (int) (((data[3] * 256 + data[4]) * 3.3) / 4096 * 100);
-                        canlist.get(data[0] - 1).fire = (float) (number / 100.0);
+                        canlist.get(data[0] - 1).fire = ((int) ((data[3] * 256 + data[4]) * 1.31));
                         break;
                     case 3:
                         //重量
-                        canlist.get(data[0] - 1).weight = (float) ((((data[3] * 256 + data[4]) * 256 + data[5]) * 256 + data[6]) / 100.0);
+                        canlist.get(data[0] - 1).weight = Math.abs((float) ((((data[3] * 256 + data[4]) * 256 + data[5]) * 256 + data[6]) / 100.0));
                         break;
                     case 4:
                         //桶满状态
@@ -567,18 +591,20 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
                         break;
                     case 6:
                         //用户id时效性
-                        int useful = data[3];
+                        int useful = data[4];
                         if (useful == 1) {
                             //用户id有效
-
                             try {
                                 data = receive_candata.take();
                                 //获取到了user_id
-                                getUser_id(data[0], String.valueOf(data[3]));
+
+                                Message message = handler.obtainMessage();
+                                message.what = GETQR;
+                                message.obj = data;
+                                message.sendToTarget();
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-                            Log.i("receivedata", "id" + Arrays.toString(data));
                             refresh_UI++;
                         }
                         break;
@@ -607,6 +633,24 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
 
             }
         }).start();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void getQRCode(byte[] data) {
+        int length = data[2];
+        Log.i("qrcode", Arrays.toString(data));
+        StringBuilder userid = new StringBuilder();
+        for (int i = 3; i < length + 3; i++) {
+            userid.append((char) data[i]);
+        }
+        Intent intent_broad = new Intent();
+        intent_broad.setAction("com.maple.sendMsgReceiver");
+        byte[] order_byte = order.command_opencan;
+        order_byte[0] = (byte) data[0];
+        intent_broad.putExtra("data", order_byte);
+        sendBroadcast(intent_broad);
+        Toast.makeText(MainActivity.this, getResources().getString(R.string.check_success), Toast.LENGTH_SHORT).show();
+        tv_scanqr.setText(getResources().getString(R.string.check_success) + "\n" + String.valueOf(userid));
     }
 
 
@@ -769,7 +813,7 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
             smartCanUtil = canlist.get(current_can - 1);
             tv_temp.setText(String.valueOf(smartCanUtil.temp));
             tv_water.setText(smartCanUtil.water + "%");
-            tv_fire.setText(smartCanUtil.fire + "v");
+            tv_fire.setText(smartCanUtil.fire + "ppm");
             tv_weight.setText(smartCanUtil.weight + "kg");
             if (smartCanUtil.canstate == 0) {
                 tv_garbagestate.setText(getResources().getString(R.string.online));
@@ -779,10 +823,22 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
                 frameLayout_open.setBackgroundColor(getResources().getColor(R.color.background2));
             } else {
                 tv_garbagestate.setText(getResources().getString(R.string.full));
-                tv_garbagestate.setTextColor(getResources().getColor(R.color.stringcolor_grey));
+                tv_garbagestate.setTextColor(getResources().getColor(R.color.viewback_red));
 
                 frameLayout_open.setClickable(false);
                 frameLayout_open.setBackgroundColor(getResources().getColor(R.color.background3));
+            }
+
+            if (smartCanUtil.weight > 20) {
+                tv_weightstate.setText(getResources().getString(R.string.overweight));
+            } else {
+                tv_weightstate.setText("");
+            }
+
+            if (smartCanUtil.temp > 30) {
+                tv_tempstate.setText(getResources().getString(R.string.high_temp));
+            } else {
+                tv_tempstate.setText("");
             }
             if (smartCanUtil.openstate == 0) {
                 //关闭
@@ -800,33 +856,49 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
     //垃圾桶自动开合
     public void canAutoOpenControl() {
         new Thread(() -> {
-            while (true) {
-                SmartCanUtil canUtil;
+            while (isopen) {
                 for (int i = 0; i < canlist.size(); i++) {
-                    canUtil = canlist.get(i);
-                    if (canUtil.distant >= 1000 && canUtil.openstate == 1) {
-                        //超声波距离大于一米且垃圾桶打开
+                    SmartCanUtil canUtil = canlist.get(i);
+
+                    if (canUtil.current_distant >= 15) {
                         Intent intent_broad = new Intent();
                         intent_broad.setAction("com.maple.sendMsgReceiver");
                         byte[] order_byte = order.command_closecan;
                         order_byte[0] = (byte) (i + 1);
                         intent_broad.putExtra("data", order_byte);
                         sendBroadcast(intent_broad);
+                        canUtil.current_distant = 0;
+                    } else {
+                        if (canUtil.distant >= 300 && canUtil.openstate == 1) {
+                            canUtil.current_distant++;
+                        } else {
+                            canUtil.current_distant = 0;
+                        }
+                    }
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+
+
             }
         }).start();
     }
 
+    //自动关闭
+    private void autoClose() {
+
+    }
+
+
+
+
     //上传数据到数据库
     public void uploadDataWithSocket() {
         new Thread(() -> {
-            while (true) {
+            while (isopen) {
                 SmartCanUtil canUtil;
                 canUtil = canlist.get(0);//可回收垃圾
                 String recycle = canUtil.temp + "&" + canUtil.water + "&" + canUtil.fire + "&" + canUtil.weight + "&" + canUtil.canstate + "&" + canUtil.openstate;
@@ -877,13 +949,14 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
 
     //处理返回的数据
     private void operateData(byte[] content) {
-        Log.i("mainactivity", Arrays.toString(content));
         //数据为读取数据返回数据
-        if (content[1] != 0x05) {
-            try {
-                receive_candata.put(content);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        if (content.length >= 2) {
+            if (content[1] != 0x05) {
+                try {
+                    receive_candata.put(content);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -89,10 +90,15 @@ public class SettingActivity extends PermissionActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         registerBroadCast();//注册广播
-
         init();
     }
 
+    @Override
+    protected void onDestroy() {
+        Intent intent = new Intent(this, JWebService.class);
+        stopService(intent);
+        super.onDestroy();
+    }
 
     private void init() {
         //初始化
@@ -257,7 +263,6 @@ public class SettingActivity extends PermissionActivity implements View.OnClickL
                 Toast.makeText(SettingActivity.this, getResources().getString(R.string.serial_success), Toast.LENGTH_SHORT).show();
                 Intent intent_tomain = new Intent(SettingActivity.this, MainActivity.class);
                 startActivity(intent_tomain);
-                finish();
             }
         }
     }

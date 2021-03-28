@@ -12,7 +12,7 @@
     <androidx.percentlayout.widget.PercentFrameLayout
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="10">
+        android:layout_weight="15">
 
         <com.skyfishjy.library.RippleBackground
             android:id="@+id/splash_ripple"
@@ -57,9 +57,10 @@
         android:orientation="vertical">
 
         <com.maple.smartcan.view.PercentLinearLayout
+            android:visibility="invisible"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.5">
+            android:layout_weight="0">
 
             <FrameLayout
                 android:layout_width="0dp"
@@ -113,19 +114,20 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
+
             <Button
-                android:layout_height="0dp"
-                android:layout_width="0dp"
                 android:id="@+id/splash_login"
-                android:gravity="center"
-                app:layout_heightPercent="40%"
-                app:layout_widthPercent="20%"
-                android:background="@drawable/grey_round_edit"
-                android:text="@string/login"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_gravity="center"
+                android:background="@drawable/blue_roundedittext"
+                android:gravity="center"
+                android:text="@string/login"
                 android:textColor="@color/stringcolor_white"
+                android:textSize="25sp"
                 android:textStyle="bold"
-                android:textSize="25sp"/>
+                app:layout_heightPercent="40%"
+                app:layout_widthPercent="20%" />
         </androidx.percentlayout.widget.PercentFrameLayout>
     </LinearLayout>
 </com.maple.smartcan.view.PercentLinearLayout>

@@ -175,6 +175,7 @@ public class JWebService extends Service implements SerialPort.ReceiveListener {
         }
     }
 
+
     private void registerSendmsgReceiver() {
         SendMessageReceiver receiver = new SendMessageReceiver();
         IntentFilter intentFilter = new IntentFilter("com.maple.sendMsgReceiver");

@@ -72,7 +72,7 @@ public class SplashActivity extends PermissionActivity {
         tv_coder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SplashActivity.this,MainActivity.class);
+                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
@@ -86,13 +86,12 @@ public class SplashActivity extends PermissionActivity {
             }
         });
 
-        bt_login.setClickable(false);
         rippleBackground.startRippleAnimation();//开启波纹动画
         //添加输入监控按钮
-        addinputwatcher();
+        //addinputwatcher();
         decorateLoading();
         //获取缓存的账号数据
-        getStorage();
+        //getStorage();
         //开启服务
         startServiceAndRegister();
     }
@@ -207,48 +206,49 @@ public class SplashActivity extends PermissionActivity {
 
     //登陆
     private void login() {
-        if (Id == null || password == null) {
-            return;
-        }
-        if (Id.equals("") || password.equals("")) {
-            return;
-        }
-        loadingDialog.loading();
-        Map<String, String> params = new HashMap<>();
-        params.put("requestCode", ServerCode.LOGIN_ACCOUNT);
-        params.put("Id", Id);
-        params.put("password", password);
-        VollySimpleRequest.getInstance(this).sendStringRequest(Request.Method.POST, HttpHelper.MAIN_CONTROL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String result = jsonObject.getString("result");
-                    if (result.equals("success")) {
-                        //登陆成功
-                        //添加sharepreference
-                        SharedPreferences sharedPreferences = getSharedPreferences("account", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.clear();
-                        editor.apply();
-                        editor.putString("Id", Id);
-                        editor.putString("password", password);
-                        editor.commit();
-                        connectSocket();//连接socket
-                    } else {
-                        loadingDialog.loadFail();
-                    }
-                } catch (JSONException e) {
-                    loadingDialog.loadFail();
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                loadingDialog.loadFail();
-            }
-        }, params);
+        toMain();
+//        if (Id == null || password == null) {
+//            return;
+//        }
+//        if (Id.equals("") || password.equals("")) {
+//            return;
+//        }
+//        loadingDialog.loading();
+//        Map<String, String> params = new HashMap<>();
+//        params.put("requestCode", ServerCode.LOGIN_ACCOUNT);
+//        params.put("Id", Id);
+//        params.put("password", password);
+//        VollySimpleRequest.getInstance(this).sendStringRequest(Request.Method.POST, HttpHelper.MAIN_CONTROL, new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                try {
+//                    JSONObject jsonObject = new JSONObject(response);
+//                    String result = jsonObject.getString("result");
+//                    if (result.equals("success")) {
+//                        //登陆成功
+//                        //添加sharepreference
+//                        SharedPreferences sharedPreferences = getSharedPreferences("account", Context.MODE_PRIVATE);
+//                        SharedPreferences.Editor editor = sharedPreferences.edit();
+//                        editor.clear();
+//                        editor.apply();
+//                        editor.putString("Id", Id);
+//                        editor.putString("password", password);
+//                        editor.commit();
+//                        connectSocket();//连接socket
+//                    } else {
+//                        loadingDialog.loadFail();
+//                    }
+//                } catch (JSONException e) {
+//                    loadingDialog.loadFail();
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                loadingDialog.loadFail();
+//            }
+//        }, params);
     }
 
 
@@ -260,7 +260,7 @@ public class SplashActivity extends PermissionActivity {
         sendBroadcast(intent_broad);
         loadingDialog.loadSuccess();
         loadingDialog.dismiss();
-        toMain();
+
     }
 
     private void startServiceAndRegister() {
@@ -280,6 +280,5 @@ public class SplashActivity extends PermissionActivity {
         overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
         finish();
     }
-
 
 }

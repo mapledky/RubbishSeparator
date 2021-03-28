@@ -58,4 +58,8 @@
     <string name="phone">phone:</string>
     <string name="score">score</string>
     <string name="hourperone">one score per an hour</string>
+    <string name="scanQRCode">scan QR code</string>
+    <string name="check_success">check success</string>
+    <string name="overweight">overweight</string>
+    <string name="high_temp">high temp</string>
 </resources>

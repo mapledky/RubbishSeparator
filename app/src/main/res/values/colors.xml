@@ -14,7 +14,7 @@
     <color name="viewback3">#FF6A00</color>
     <color name="viewback4">#F0F0F0</color>
     <color name="viewback5">#66D0FF</color>
-
+    <color name="viewback_red">#FF0000</color>
     <!--字体颜色-->
     <color name="stringcolor_black">#000</color>
     <color name="stringcolor_grey">#9E9E9E</color>

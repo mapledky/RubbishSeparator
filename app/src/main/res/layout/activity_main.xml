@@ -396,6 +396,29 @@
                                 android:textColor="@color/viewback5"
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/mainac_despane_garbageweight_state"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:layout_gravity="center_vertical"
+                                android:text=""
+                                android:textColor="@color/viewback_red"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+
+                            <TextView
+                                android:id="@+id/mainac_despane_garbageweight_temp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:layout_gravity="center_vertical"
+                                android:text=""
+                                android:textColor="@color/viewback_red"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
                         </com.maple.smartcan.view.PercentLinearLayout>
 
                         <com.maple.smartcan.view.PercentLinearLayout
@@ -1054,7 +1077,32 @@
                         </com.maple.smartcan.view.PercentLinearLayout>
                     </com.maple.smartcan.view.PercentLinearLayout>
                 </com.maple.smartcan.view.PercentLinearLayout>
-
+                <com.maple.smartcan.view.PercentLinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:background="@color/background1"
+                    android:orientation="vertical"
+                    app:layout_heightPercent="90%"
+                    app:layout_widthPercent="90%">
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center_horizontal"
+                        app:layout_heightPercent="50%"
+                        app:layout_widthPercent="60%"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/scanqrcode"
+                        android:layout_marginTop="20dp"/>
+                    <TextView
+                        android:id="@+id/text_scan_qrcode"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/scanQRCode"
+                        android:textStyle="bold"
+                        android:textSize="25sp"/>
+                </com.maple.smartcan.view.PercentLinearLayout>
 
             </androidx.percentlayout.widget.PercentFrameLayout>
         </com.maple.smartcan.view.PercentLinearLayout>

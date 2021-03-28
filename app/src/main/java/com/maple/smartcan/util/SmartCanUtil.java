@@ -10,4 +10,6 @@ public class SmartCanUtil {
     public int canstate = 0;
     public int openstate = 0;
 
+    public int current_distant = 0;
+
 }

@@ -60,4 +60,8 @@
     <string name="phone">电话:</string>
     <string name="score">积分</string>
     <string name="hourperone">每小时之内只能获取一次积分</string>
+    <string name="scanQRCode">扫描二维码</string>
+    <string name="check_success">验证成功</string>
+    <string name="overweight">超重</string>
+    <string name="high_temp">高温</string>
 </resources>

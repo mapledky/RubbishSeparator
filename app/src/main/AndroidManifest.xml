@@ -45,7 +45,9 @@
 
         <activity
             android:name=".activity.SettingActivity"
-            android:screenOrientation="landscape" />
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="landscape" >
+        </activity>
         <activity
             android:name=".activity.SplashActivity"
             android:screenOrientation="landscape"
