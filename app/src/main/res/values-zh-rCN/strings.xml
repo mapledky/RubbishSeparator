@@ -55,4 +55,9 @@
     <string name="touchtoclose">点击关闭垃圾桶</string>
     <string name="coder_tune">开发者通道</string>
     <string name="clear">清空</string>
+    <string name="phonetypeerror">号码格式错误</string>
+    <string name="username">用户名</string>
+    <string name="phone">电话:</string>
+    <string name="score">积分</string>
+    <string name="hourperone">每小时之内只能获取一次积分</string>
 </resources>

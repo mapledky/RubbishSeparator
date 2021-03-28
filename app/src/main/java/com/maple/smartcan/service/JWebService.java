@@ -18,6 +18,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -165,9 +166,12 @@ public class JWebService extends Service implements SerialPort.ReceiveListener {
             byte[] data = intent.getByteArrayExtra("data");
             ArrayList<byte[]> order_array = new ArrayList<>();
             order_array.add(data);
-            if (serialPort.isPortOpen && isSerialPortOpen) {
-                serialPort.addOrder(order_array);
+            if (serialPort != null) {
+                if (serialPort.isPortOpen && isSerialPortOpen) {
+                    serialPort.addOrder(order_array);
+                }
             }
+
         }
     }
 
@@ -175,7 +179,6 @@ public class JWebService extends Service implements SerialPort.ReceiveListener {
         SendMessageReceiver receiver = new SendMessageReceiver();
         IntentFilter intentFilter = new IntentFilter("com.maple.sendMsgReceiver");
         registerReceiver(receiver, intentFilter);
-
     }
 
     //接受波特率参数的广播
@@ -216,7 +219,7 @@ public class JWebService extends Service implements SerialPort.ReceiveListener {
         public void onReceive(Context context, Intent intent) {
             if (!isSocketOpen) {
                 isSocketOpen = true;
-                Log.i("locationinfo",intent.getStringExtra("latitude")+"  "+intent.getStringExtra("longitude"));
+                Toast.makeText(JWebService.this, "地理位置获取成功", Toast.LENGTH_SHORT).show();
                 openSocket(intent.getStringExtra("latitude"), intent.getStringExtra("longitude"));
             }
         }

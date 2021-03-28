@@ -109,14 +109,12 @@ public class SplashActivity extends PermissionActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String account = et_account.getText().toString();
                 Id = account;
-                if (account != null) {
-                    if (!account.equals("")) {
-                        if (password != null) {
-                            if (!password.equals("")) {
-                                bt_login.setClickable(true);
-                                bt_login.setBackground(getResources().getDrawable(R.drawable.blue_roundedittext));
-                                return;
-                            }
+                if (!account.equals("")) {
+                    if (password != null) {
+                        if (!password.equals("")) {
+                            bt_login.setClickable(true);
+                            bt_login.setBackground(getResources().getDrawable(R.drawable.blue_roundedittext));
+                            return;
                         }
                     }
                 }
@@ -141,14 +139,12 @@ public class SplashActivity extends PermissionActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String password_ = et_password.getText().toString();
                 password = password_;
-                if (password_ != null) {
-                    if (!password_.equals("")) {
-                        if (Id != null) {
-                            if (!Id.equals("")) {
-                                bt_login.setClickable(true);
-                                bt_login.setBackground(getResources().getDrawable(R.drawable.blue_roundedittext));
-                                return;
-                            }
+                if (!password_.equals("")) {
+                    if (Id != null) {
+                        if (!Id.equals("")) {
+                            bt_login.setClickable(true);
+                            bt_login.setBackground(getResources().getDrawable(R.drawable.blue_roundedittext));
+                            return;
                         }
                     }
                 }

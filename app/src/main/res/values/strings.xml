@@ -53,4 +53,9 @@
     <string name="touchtoclose">touch to close</string>
     <string name="coder_tune">coder tune</string>
     <string name="clear">clear</string>
+    <string name="phonetypeerror">number error</string>
+    <string name="username">user name</string>
+    <string name="phone">phone:</string>
+    <string name="score">score</string>
+    <string name="hourperone">one score per an hour</string>
 </resources>

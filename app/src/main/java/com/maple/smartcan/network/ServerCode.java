@@ -4,6 +4,11 @@ public class ServerCode {
 
     //maincontrol
     public static final String LOGIN_ACCOUNT = "001";
+    public static final String ADDUSERSCORE = "003";
+
+    //mainmobile
+    public static final String GETINFO_ID = "008";
+    public static final String GETINFO_NUMBER = "009";
 
 
     //socket
