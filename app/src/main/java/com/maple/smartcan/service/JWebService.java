@@ -50,6 +50,8 @@ import android_serialport_api.SerialPort;
 该sevice用于承载串口连接的相关实例以及接口
 2021-1-24
 Carry
+
+
  */
 
 public class JWebService extends Service implements SerialPort.ReceiveListener {
@@ -147,7 +149,7 @@ public class JWebService extends Service implements SerialPort.ReceiveListener {
             //获取前端请求连接套接字的请求
             Id = intent.getStringExtra("Id");
             //获取地理位置信息
-            MyLocationUtil.getLocationByGaode(JWebService.this);
+            new MyLocationUtil(JWebService.this).getLocationByGaode();
         }
     }
 

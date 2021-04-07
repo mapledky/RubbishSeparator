@@ -20,63 +20,43 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MyLocationUtil {
-    private static String provider;
+public class MyLocationUtil implements AMapLocationListener {
 
-    public static Location getMyLocation(Context context) {
-        //获取当前位置信息
-        //获取定位服务
-        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        //获取当前可用的位置控制器
-        List<String> list = locationManager.getProviders(true);
-        if (list.contains(LocationManager.GPS_PROVIDER)) {
-            //GPS位置控制器
-            provider = LocationManager.GPS_PROVIDER;//GPS定位
-        } else if (list.contains(LocationManager.NETWORK_PROVIDER)) {
-            //网络位置控制器
-            provider = LocationManager.NETWORK_PROVIDER;//网络定位
-        }
+    private AMapLocationClient mlocationClient;
+    private final Context context;
 
-        if (provider != null) {
-            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return null;
-            }
-            return locationManager.getLastKnownLocation(provider);
-        } else {
-            Toast.makeText(context, "请检查网络或GPS是否打开", Toast.LENGTH_SHORT).show();
-        }
-        return null;
+    public MyLocationUtil(Context context) {
+        this.context = context;
     }
 
-    public static void getLocationByGaode(Context context) {
-        AMapLocationListener mLocationListener;
-        mLocationListener = aMapLocation -> {
-            if (aMapLocation != null) {
-                if (aMapLocation.getErrorCode() == 0) {
-                    //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
-                    Intent intent = new Intent();
-                    intent.setAction("com.maple.locationReceiver");
-                    intent.putExtra("latitude", String.valueOf(aMapLocation.getLatitude()));
-                    intent.putExtra("longitude", String.valueOf(aMapLocation.getLongitude()));
-                    context.sendBroadcast(intent);
-                }
-            }
-        };
-        AMapLocationClient mLocationClient = new AMapLocationClient(context);
-        AMapLocationClientOption mapLocationClientOption = new AMapLocationClientOption();
-        mapLocationClientOption.setOnceLocationLatest(true);
+    public void getLocationByGaode() {
+        if (mlocationClient == null) {
+            mlocationClient = new AMapLocationClient(context);
+            AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
+            //设置定位监听
+            mlocationClient.setLocationListener(this);
+            //设置为高精度定位模式
+            mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+            mLocationOption.setInterval(3000);
+            //设置定位参数
+            mlocationClient.setLocationOption(mLocationOption);
+        }
 
-        if (null != mLocationClient) {
-            mLocationClient.setLocationOption(mapLocationClientOption);
-            mLocationClient.setLocationListener(mLocationListener);
-            mLocationClient.startLocation();
+        mlocationClient.stopLocation();
+        mlocationClient.startLocation();
+    }
+
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation) {
+        if (aMapLocation != null) {
+            if (aMapLocation.getErrorCode() == 0) {
+                //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                Intent intent = new Intent();
+                intent.setAction("com.maple.locationReceiver");
+                intent.putExtra("latitude", String.valueOf(aMapLocation.getLatitude()));
+                intent.putExtra("longitude", String.valueOf(aMapLocation.getLongitude()));
+                context.sendBroadcast(intent);
+            }
         }
     }
 }
