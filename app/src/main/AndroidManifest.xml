@@ -33,10 +33,6 @@
             android:name=".wxapi.WXEntryActivity"
             android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".activity.Agreement"
-            android:screenOrientation="portrait" />
-
         <service
             android:name=".service.JWebService"
             android:exported="false" />
