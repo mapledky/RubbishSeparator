@@ -29,9 +29,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity
-            android:name=".wxapi.WXEntryActivity"
-            android:screenOrientation="portrait" />
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="9d5d34e616e23373e5d4cac9b6c15e5c" />
 
         <service
             android:name=".service.JWebService"
@@ -56,7 +57,4 @@
             android:name=".activity.MainActivity"
             android:screenOrientation="landscape" />
     </application>
-    <meta-data
-        android:name="com.amap.api.v2.apikey"
-        android:value="28be7b4e1fe833a76cb24785d9050116" />
 </manifest>

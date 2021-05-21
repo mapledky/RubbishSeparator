@@ -8,13 +8,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,9 +24,7 @@ import com.maple.smartcan.network.HttpHelper;
 import com.maple.smartcan.network.ServerCode;
 import com.maple.smartcan.network.VollySimpleRequest;
 import com.maple.smartcan.service.JWebService;
-import com.maple.smartcan.view.AnimationButton.AnimationButton;
 import com.skyfishjy.library.RippleBackground;
-import com.wega.library.loadingDialog.LoadingDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,10 +32,12 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import dmax.dialog.SpotsDialog;
+
 public class SplashActivity extends PermissionActivity {
 
     RippleBackground rippleBackground;//波纹动画
-    private LoadingDialog loadingDialog;//加载框
+    private SpotsDialog loadingDialog;//加载框
 
     boolean permission = false;
 
@@ -72,7 +69,7 @@ public class SplashActivity extends PermissionActivity {
         tv_coder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SplashActivity.this,MainActivity.class);
+                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
@@ -178,13 +175,10 @@ public class SplashActivity extends PermissionActivity {
 
     //装饰加载条
     private void decorateLoading() {
-        LoadingDialog.Builder builder = new LoadingDialog.Builder(this);
-        builder.setLoading_text(getText(R.string.loginaccount))
-                .setSuccess_text(getText(R.string.success))
-                .setFail_text(getText(R.string.fail));
-        loadingDialog = builder.create();
-        loadingDialog.setCanceledOnTouchOutside(false);
-        loadingDialog.setCancelable(false);
+        if (loadingDialog == null) {
+            loadingDialog = new SpotsDialog(this);
+            loadingDialog.setCanceledOnTouchOutside(false);
+        }
     }
 
 
@@ -213,7 +207,7 @@ public class SplashActivity extends PermissionActivity {
         if (Id.equals("") || password.equals("")) {
             return;
         }
-        loadingDialog.loading();
+        loadingDialog.show();
         Map<String, String> params = new HashMap<>();
         params.put("requestCode", ServerCode.LOGIN_ACCOUNT);
         params.put("Id", Id);
@@ -234,34 +228,19 @@ public class SplashActivity extends PermissionActivity {
                         editor.putString("Id", Id);
                         editor.putString("password", password);
                         editor.commit();
-                        connectSocket();//连接socket
+                        toMain();
+                        loadingDialog.dismiss();
                     } else {
-                        loadingDialog.loadFail();
+                        loadingDialog.dismiss();
                     }
                 } catch (JSONException e) {
-                    loadingDialog.loadFail();
+                    loadingDialog.dismiss();
                     e.printStackTrace();
                 }
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                loadingDialog.loadFail();
-            }
-        }, params);
+        }, error -> loadingDialog.dismiss(), params);
     }
 
-
-    //连接socket
-    private void connectSocket() {
-        Intent intent_broad = new Intent();
-        intent_broad.setAction("com.maple.openSocketReceiver");
-        intent_broad.putExtra("Id", Id);
-        sendBroadcast(intent_broad);
-        loadingDialog.loadSuccess();
-        loadingDialog.dismiss();
-        toMain();
-    }
 
     private void startServiceAndRegister() {
         startJWebSClientService();//开启service连接
@@ -275,6 +254,7 @@ public class SplashActivity extends PermissionActivity {
     //前往main
     private void toMain() {
         Intent intent = new Intent(this, SettingActivity.class);
+        intent.putExtra("Id", Id);
         startActivity(intent);
         //设置切换动画
         overridePendingTransition(R.anim.fade_out, R.anim.fade_in);

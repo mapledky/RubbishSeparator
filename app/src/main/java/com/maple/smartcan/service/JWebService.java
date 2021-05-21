@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Binder;
@@ -22,25 +21,17 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
 import com.maple.smartcan.activity.MainActivity;
 import com.maple.smartcan.network.HttpHelper;
 import com.maple.smartcan.network.ServerCode;
-import com.maple.smartcan.util.MyLocationUtil;
 import com.maple.smartcan.util.order;
 
-import org.java_websocket.WebSocket;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 import android_serialport_api.SerialPort;
@@ -108,7 +99,6 @@ public class JWebService extends Service implements SerialPort.ReceiveListener {
     private void registerBroacast() {
         registerBaudrateReceiver();//注册波特率接收器广播
         registerSendmsgReceiver();//发送串口信息的广播
-        registerOpenSocketReceiver();//请求链接socket
         registerSendSocketMsgReceiver();//发送套接字信息的广播
         registerLocationListener();//位置信息
     }
@@ -139,23 +129,6 @@ public class JWebService extends Service implements SerialPort.ReceiveListener {
     private void registerSendSocketMsgReceiver() {
         SendSocketMsgReceiver receiver = new SendSocketMsgReceiver();
         IntentFilter intentFilter = new IntentFilter("com.maple.sendSocketMsgReceiver");
-        registerReceiver(receiver, intentFilter);
-    }
-
-    //打开套接字连接的广播
-    private class OpenSocketReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            //获取前端请求连接套接字的请求
-            Id = intent.getStringExtra("Id");
-            //获取地理位置信息
-            new MyLocationUtil(JWebService.this).getLocationByGaode();
-        }
-    }
-
-    private void registerOpenSocketReceiver() {
-        OpenSocketReceiver receiver = new OpenSocketReceiver();
-        IntentFilter intentFilter = new IntentFilter("com.maple.openSocketReceiver");
         registerReceiver(receiver, intentFilter);
     }
 
@@ -222,6 +195,7 @@ public class JWebService extends Service implements SerialPort.ReceiveListener {
             if (!isSocketOpen) {
                 isSocketOpen = true;
                 Toast.makeText(JWebService.this, "地理位置获取成功", Toast.LENGTH_SHORT).show();
+                Id = intent.getStringExtra("Id");
                 openSocket(intent.getStringExtra("latitude"), intent.getStringExtra("longitude"));
             }
         }
