@@ -30,17 +30,18 @@ import com.maple.smartcan.service.JWebService;
 import com.maple.smartcan.util.AvailableState;
 import com.maple.smartcan.util.ViewControl;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.wega.library.loadingDialog.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import dmax.dialog.SpotsDialog;
 
 public class SettingActivity extends PermissionActivity implements View.OnClickListener, StateAdapter.ChooseStateListener {
 
     //相关UI组件
     private EditText et_baudrate;//波特率输入框
     private Button bt_connect;//尝试连接
-    private LoadingDialog loadingDialog;//加载框
+    private SpotsDialog loadingDialog;//加载框
     private ListView lv_state;//展示地址栏
     private SmartRefreshLayout lv_refreshLayout;//listview的嵌套
     private SmartRefreshLayout lv_settingpane;//参数设定嵌套
@@ -179,13 +180,8 @@ public class SettingActivity extends PermissionActivity implements View.OnClickL
 
     //装饰加载条
     private void decorateLoading() {
-        LoadingDialog.Builder builder = new LoadingDialog.Builder(this);
-        builder.setLoading_text(getText(R.string.connecting))
-                .setSuccess_text(getText(R.string.connect_success))
-                .setFail_text(getText(R.string.connect_fail));
-        loadingDialog = builder.create();
+        loadingDialog = new SpotsDialog(this);
         loadingDialog.setCanceledOnTouchOutside(false);
-        loadingDialog.setCancelable(false);
     }
 
     //修饰弹性scrollview
@@ -202,7 +198,7 @@ public class SettingActivity extends PermissionActivity implements View.OnClickL
     private void chooseLocation() {
         if (path != null) {
             if (!path.equals("")) {
-                loadingDialog.loading();
+                loadingDialog.show();
                 openSerialPort();
             } else {
                 Toast.makeText(this, getString(R.string.chooseserialport), Toast.LENGTH_SHORT).show();
@@ -216,10 +212,10 @@ public class SettingActivity extends PermissionActivity implements View.OnClickL
     @Override
     public void chooseState(int index) {
         AvailableState state = statelist.get(index);
-        for(int i=0;i<statelist.size();i++){
+        for (int i = 0; i < statelist.size(); i++) {
             statelist.get(i).choosed = 0;
         }
-        statelist.get(index).choosed=1;
+        statelist.get(index).choosed = 1;
         adapter.notifyDataSetChanged();
         path = state.state;
         Toast.makeText(this, state.state, Toast.LENGTH_SHORT).show();
@@ -253,11 +249,11 @@ public class SettingActivity extends PermissionActivity implements View.OnClickL
             assert result != null;
             if (result.equals("0")) {
                 //开启失败
-                loadingDialog.loadFail();
+                loadingDialog.dismiss();
                 Toast.makeText(SettingActivity.this, getResources().getString(R.string.serial_fail), Toast.LENGTH_SHORT).show();
             } else {
                 //开启成功
-                loadingDialog.loadSuccess();
+                loadingDialog.dismiss();
                 Toast.makeText(SettingActivity.this, getResources().getString(R.string.serial_success), Toast.LENGTH_SHORT).show();
                 Intent intent_tomain = new Intent(SettingActivity.this, MainActivity.class);
                 startActivity(intent_tomain);
@@ -274,7 +270,7 @@ public class SettingActivity extends PermissionActivity implements View.OnClickL
 
     //获取有效的串口地址
     private void getvailableState() {
-        loadingDialog.loading();
+        loadingDialog.show();
         path = null;
         statelist.clear();
         search();
@@ -282,9 +278,9 @@ public class SettingActivity extends PermissionActivity implements View.OnClickL
         if (statelist.size() == 0) {
             //没有可用的串口地址
             Toast.makeText(this, getString(R.string.noserialport), Toast.LENGTH_SHORT).show();
-            loadingDialog.loadFail();
+            loadingDialog.dismiss();
         } else {
-            loadingDialog.loadSuccess();
+            loadingDialog.dismiss();
         }
     }
 
@@ -297,7 +293,7 @@ public class SettingActivity extends PermissionActivity implements View.OnClickL
             statelist.clear();
             for (UsbSerialDriver driver : drivers) {
                 List<UsbSerialPort> ports = driver.getPorts();
-                for(int i=0;i<ports.size();i++){
+                for (int i = 0; i < ports.size(); i++) {
                     AvailableState state = new AvailableState();
                     state.state = ports.get(i).getDevice().getDeviceName();
                     state.choosed = 0;

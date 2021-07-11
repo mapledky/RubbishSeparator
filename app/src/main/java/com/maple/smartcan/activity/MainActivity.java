@@ -29,7 +29,7 @@ import com.maple.smartcan.network.VollySimpleRequest;
 import com.maple.smartcan.util.SmartCanUtil;
 import com.maple.smartcan.util.ViewControl;
 import com.maple.smartcan.util.order;
-import com.wega.library.loadingDialog.LoadingDialog;
+
 
 
 import org.json.JSONException;
@@ -43,11 +43,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import dmax.dialog.SpotsDialog;
+
 public class MainActivity extends PermissionActivity implements View.OnClickListener {
 
     private boolean isopen = true;
 
-    private LoadingDialog loadingDialog;
+    private SpotsDialog loadingDialog;
 
     //ui空间
     private ImageView iv_multi;//左上角多选择
@@ -268,13 +270,8 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
 
     //装饰加载条
     private void decorateLoading() {
-        LoadingDialog.Builder builder = new LoadingDialog.Builder(this);
-        builder.setLoading_text(getText(R.string.loginaccount))
-                .setSuccess_text(getText(R.string.success))
-                .setFail_text(getText(R.string.fail));
-        loadingDialog = builder.create();
+        loadingDialog = new SpotsDialog(this);
         loadingDialog.setCanceledOnTouchOutside(false);
-        loadingDialog.setCancelable(false);
     }
 
 
@@ -397,7 +394,7 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
 
     //获取用户信息
     private void getUserInfo(int type, String data) {
-        loadingDialog.loading();
+        loadingDialog.show();
         Map<String, String> params = new HashMap<>();
         if (type == 1) {
             //id获取
@@ -416,7 +413,7 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
                     inputphoneNumber = "";
                     tv_inputphone.setText(getString(R.string.input_phone));
                     //获取成功
-                    loadingDialog.loadSuccess();
+                    loadingDialog.dismiss();
                     user_id = jsonObject.getString("Id");
                     phoneNumber = jsonObject.getString("phoneNumber");
                     name = jsonObject.getString("username");
@@ -426,14 +423,14 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
                     refreshUserUi();//展示用户的信息
                     addUserScore();
                 } else {
-                    loadingDialog.loadFail();
+                    loadingDialog.dismiss();
                     Toast.makeText(MainActivity.this, getString(R.string.fail), Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
-                loadingDialog.loadFail();
+                loadingDialog.dismiss();
                 e.printStackTrace();
             }
-        }, error -> loadingDialog.loadFail(), params);
+        }, error -> loadingDialog.dismiss(), params);
     }
 
     //获取到了user_id
@@ -477,7 +474,7 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
 
     private void addUserScore() {
         if (user_id != null) {
-            loadingDialog.loading();
+            loadingDialog.show();
             Map<String, String> params = new HashMap<>();
             params.put("requestCode", ServerCode.ADDUSERSCORE);
             params.put("user_id", user_id);
@@ -489,14 +486,14 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
                         score = String.valueOf(Integer.parseInt(score) + 1);
                         refreshUserUi();//展示用户的信息
                     } else {
-                        loadingDialog.loadFail();
+                        loadingDialog.dismiss();
                         Toast.makeText(MainActivity.this, getString(R.string.hourperone), Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
-                    loadingDialog.loadFail();
+                    loadingDialog.dismiss();
                     e.printStackTrace();
                 }
-            }, error -> loadingDialog.loadFail(), params);
+            }, error -> loadingDialog.dismiss(), params);
         }
     }
 

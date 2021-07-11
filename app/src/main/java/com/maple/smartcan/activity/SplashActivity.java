@@ -8,39 +8,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.maple.smartcan.R;
-import com.maple.smartcan.network.HttpHelper;
-import com.maple.smartcan.network.ServerCode;
-import com.maple.smartcan.network.VollySimpleRequest;
 import com.maple.smartcan.service.JWebService;
-import com.maple.smartcan.view.AnimationButton.AnimationButton;
 import com.skyfishjy.library.RippleBackground;
-import com.wega.library.loadingDialog.LoadingDialog;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
+import dmax.dialog.SpotsDialog;
 
 public class SplashActivity extends PermissionActivity {
 
     RippleBackground rippleBackground;//波纹动画
-    private LoadingDialog loadingDialog;//加载框
+    private SpotsDialog loadingDialog;//加载框
 
     boolean permission = false;
 
@@ -177,13 +162,8 @@ public class SplashActivity extends PermissionActivity {
 
     //装饰加载条
     private void decorateLoading() {
-        LoadingDialog.Builder builder = new LoadingDialog.Builder(this);
-        builder.setLoading_text(getText(R.string.loginaccount))
-                .setSuccess_text(getText(R.string.success))
-                .setFail_text(getText(R.string.fail));
-        loadingDialog = builder.create();
+        loadingDialog = new SpotsDialog(this);
         loadingDialog.setCanceledOnTouchOutside(false);
-        loadingDialog.setCancelable(false);
     }
 
 
@@ -258,7 +238,7 @@ public class SplashActivity extends PermissionActivity {
         intent_broad.setAction("com.maple.openSocketReceiver");
         intent_broad.putExtra("Id", Id);
         sendBroadcast(intent_broad);
-        loadingDialog.loadSuccess();
+        loadingDialog.show();
         loadingDialog.dismiss();
 
     }
