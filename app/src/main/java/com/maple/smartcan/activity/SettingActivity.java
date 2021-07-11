@@ -26,7 +26,6 @@ import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
 import com.maple.smartcan.R;
 import com.maple.smartcan.adapter.StateAdapter;
-import com.maple.smartcan.service.JWebService;
 import com.maple.smartcan.util.AvailableState;
 import com.maple.smartcan.util.MyLocationUtil;
 import com.maple.smartcan.util.ViewControl;
@@ -43,6 +42,7 @@ public class SettingActivity extends PermissionActivity implements View.OnClickL
     private EditText et_baudrate;//波特率输入框
     private Button bt_connect;//尝试连接
     private SpotsDialog loadingDialog;//加载框
+
 
     //页面相关变量
     private String baudrate;//输入的波特率
