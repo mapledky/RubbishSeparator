@@ -3,7 +3,6 @@ package com.maple.smartcan.activity;
 import androidx.annotation.NonNull;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -22,8 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.maple.smartcan.R;
 import com.maple.smartcan.network.HttpHelper;
@@ -44,8 +41,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class MainActivity extends PermissionActivity implements View.OnClickListener {
@@ -143,7 +138,6 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
             }
         }
     };
-
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -567,45 +561,64 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
                 switch (refresh_UI) {
                     case 0:
                         //温度ui
-                        canlist.get(data[0] - 1).temp = (float) ((data[3] * 256 + data[4]) / 100.0);
+                        if (data.length >= 5) {
+                            canlist.get(data[0] - 1).temp = (float) ((data[3] * 256 + data[4]) / 100.0);
+
+                        }
                         break;
                     case 1:
                         //湿度
-                        canlist.get(data[0] - 1).water = (float) ((data[3] * 256 + data[4]) / 100.0);
+                        if (data.length >= 5) {
+                            canlist.get(data[0] - 1).water = (float) ((data[3] * 256 + data[4]) / 100.0);
+                        }
                         break;
                     case 2:
                         //可燃性气体浓度
-                        canlist.get(data[0] - 1).fire = ((int) ((data[3] * 256 + data[4]) * 1.31));
+                        if (data.length >= 5) {
+                            canlist.get(data[0] - 1).fire = ((int) ((data[3] * 256 + data[4]) * 1.31));
+                        }
                         break;
                     case 3:
                         //重量
-                        canlist.get(data[0] - 1).weight = Math.abs((float) ((((data[3] * 256 + data[4]) * 256 + data[5]) * 256 + data[6]) / 100.0));
+                        if (data.length >= 7) {
+                            canlist.get(data[0] - 1).weight = Math.abs((float) ((((data[3] * 256 + data[4]) * 256 + data[5]) * 256 + data[6]) / 100.0));
+                        }
                         break;
                     case 4:
                         //桶满状态
-                        canlist.get(data[0] - 1).canstate = (data[4]);
+                        if (data.length >= 5) {
+                            if (data[4] == 1) {
+                                canlist.get(data[0] - 1).canstate = 0;
+                            } else {
+                                canlist.get(data[0] - 1).canstate = 1;
+                            }
+                        }
                         break;
                     case 5:
                         //推杆状态
-                        canlist.get(data[0] - 1).openstate = data[3];
+                        if (data.length >= 4) {
+                            canlist.get(data[0] - 1).openstate = data[3];
+                        }
                         break;
                     case 6:
                         //用户id时效性
-                        int useful = data[4];
-                        if (useful == 1) {
-                            //用户id有效
-                            try {
-                                data = receive_candata.take();
-                                //获取到了user_id
+                        if (data.length >= 4) {
+                            int useful = data[4];
+                            if (useful == 1) {
+                                //用户id有效
+                                try {
+                                    data = receive_candata.take();
+                                    //获取到了user_id
 
-                                Message message = handler.obtainMessage();
-                                message.what = GETQR;
-                                message.obj = data;
-                                message.sendToTarget();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+                                    Message message = handler.obtainMessage();
+                                    message.what = GETQR;
+                                    message.obj = data;
+                                    message.sendToTarget();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                refresh_UI++;
                             }
-                            refresh_UI++;
                         }
                         break;
                     case 7:
@@ -613,13 +626,15 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
 
                         break;
                     case 8:
-                        //超声波数据
-                        canlist.get(data[0] - 1).distant = (int) (data[3] * 256 + data[4]);
+                        if (data.length >= 5) {
+                            //超声波数据
+                            canlist.get(data[0] - 1).distant = (int) (data[3] * 256 + data[4]);
 
-                        //刷新页面UI
-                        Message msg = handler.obtainMessage();
-                        msg.what = REFRESH_UI;
-                        msg.sendToTarget();
+                            //刷新页面UI
+                            Message msg = handler.obtainMessage();
+                            msg.what = REFRESH_UI;
+                            msg.sendToTarget();
+                        }
                         break;
                     default:
                         break;
@@ -891,8 +906,6 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
     private void autoClose() {
 
     }
-
-
 
 
     //上传数据到数据库

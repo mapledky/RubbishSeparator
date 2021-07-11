@@ -11,7 +11,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,7 +33,6 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.wega.library.loadingDialog.LoadingDialog;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class SettingActivity extends PermissionActivity implements View.OnClickListener, StateAdapter.ChooseStateListener {
